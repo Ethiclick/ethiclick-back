@@ -38,4 +38,10 @@ export default class Professionnel extends BaseModel {
   public updatedAt: DateTime
 
     // TODO: ajouter les clé étrangère
+    // id_cat1
+    // id_cat2
+    // id_cat3
+    // id_prix
+    // id_abo
+    // id_user
 }
