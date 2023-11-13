@@ -12,7 +12,7 @@ export default class Abonnement extends BaseModel {
   public totalPrice: string // peut être qu'on aura besoin de + de champs pour faire les paiement en plsr fois?
 
   @column.date()
-  public dataDebut: DateTime
+  public date_debut: DateTime
 
   @column.date()
   public date_fin_prevu: DateTime

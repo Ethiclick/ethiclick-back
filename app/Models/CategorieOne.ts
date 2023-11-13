@@ -1,8 +1,7 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
 
-export default class Categories2 extends BaseModel {
-  // public static table = 'categories2';
+export default class CategorieOne extends BaseModel {
 
   @column({ isPrimary: true })
   public id: number
@@ -15,7 +14,4 @@ export default class Categories2 extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
-
-  // ! Clé étrangère
-  // id_cat1
 }

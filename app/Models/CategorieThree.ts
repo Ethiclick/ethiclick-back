@@ -1,8 +1,10 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
 
-export default class Categories3 extends BaseModel {
-  // public static table = 'categories3';
+export default class CategorieThree extends BaseModel {
+  static get table() {
+    return 'categorieThree';
+  }
 
   @column({ isPrimary: true })
   public id: number

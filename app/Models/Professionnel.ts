@@ -8,9 +8,6 @@ export default class Professionnel extends BaseModel {
   public id: number
 
   @column()
-  public role: string
-
-  @column()
   public siret: number
 
   @column()

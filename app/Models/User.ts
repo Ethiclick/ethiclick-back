@@ -3,7 +3,8 @@ import { BaseModel, column, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
 
 export default class User extends BaseModel {
   // public static table = 'users';
-
+  public static connection = 'pg'
+  
   @column({ isPrimary: true })
   public id: number
 
