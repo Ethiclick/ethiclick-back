@@ -1,9 +1,7 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
 
-export default class Horaires extends BaseModel {
-  // public static table = 'horaires';
-
+export default class Horaire extends BaseModel {
   @column({ isPrimary: true })
   public id: number
 
