@@ -1,12 +1,11 @@
 import BaseSchema from '@ioc:Adonis/Lucid/Schema'
 
-export default class extends BaseSchema {
-  protected tableName = 'price_ranges'
+export default class CategorieTwos extends BaseSchema {
+  protected tableName = 'categorie_twos'
 
   public async up () {
     this.schema.createTable(this.tableName, (table) => {
-      table.increments('id')
-
+      table.increments('id').unique()
       /**
        * Colonne
        */
@@ -16,6 +15,9 @@ export default class extends BaseSchema {
        */
       table.timestamp('created_at', { useTz: true })
       table.timestamp('updated_at', { useTz: true })
+
+      // ** Clé étrangère
+      table.integer('idcat1').references('categorie_ones.id')
     })
   }
 

@@ -38,7 +38,6 @@ export default class Abonnement extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
 
-  
-  // ! Clé étrangère
-  // id_cat1
+  // TODO: clé étrangère
+  // iduser
 }

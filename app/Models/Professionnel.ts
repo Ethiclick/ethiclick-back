@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, belongsTo, BelongsTo } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, column, belongsTo, BelongsTo, hasMany, HasMany } from '@ioc:Adonis/Lucid/Orm'
 import User from './User'
 import CategorieOne from './CategorieOne'
 import CategorieTwo from './CategorieTwo'
@@ -41,24 +41,35 @@ export default class Professionnel extends BaseModel {
 
 
     // ** Clé étrangère
+    @hasMany(() => User, {
+      localKey: 'iduser'
+    })
+    public id_user: HasMany<typeof User>
 
-    @belongsTo(() => User)
-    public id_user: BelongsTo<typeof User>
+    @hasMany(() => CategorieOne, {
+      localKey: 'idcat1'
+    })
+    public id_cat1: HasMany<typeof CategorieOne>
 
-    @belongsTo(() => CategorieOne)
-    public id_cat1: BelongsTo<typeof CategorieOne>
+    @hasMany(() => CategorieTwo, {
+      localKey: 'idcat2'
+    })
+    public id_cat2: HasMany<typeof CategorieTwo>
 
-    @belongsTo(() => CategorieTwo)
-    public id_cat2: BelongsTo<typeof CategorieTwo>
+    @hasMany(() => CategorieThree, {
+      localKey: 'idcat3'
+    })
+    public id_cat3: HasMany<typeof CategorieThree>
 
-    @belongsTo(() => CategorieThree)
-    public id_cat3: BelongsTo<typeof CategorieThree>
+    @hasMany(() => PriceRange, {
+      localKey: 'idprice'
+    })
+    public id_priceRange: HasMany<typeof PriceRange>
 
-    @belongsTo(() => PriceRange)
-    public id_priceRange: BelongsTo<typeof PriceRange>
-
-    @belongsTo(() => Abonnement)
-    public id_abo: BelongsTo<typeof Abonnement>
+    @hasMany(() => Abonnement, {
+      localKey: 'idabo'
+    })
+    public id_abo: HasMany<typeof Abonnement>
     // @hasOne(() => User, {
     //   // pour tester lequel sera le nom de la colonne qui contiendra la clé étragnère
     //   // ! namingStrategie Adonis -> snakeCase
