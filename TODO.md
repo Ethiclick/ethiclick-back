@@ -1,5 +1,6 @@
 **DATABASE**
 - Ajouter les clées étrangères
+- Crée query
 - Vérifier le typage des dates
 
 // Factories ??
