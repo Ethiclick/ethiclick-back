@@ -1,7 +1,7 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
 
-export default class User extends BaseModel {
+export default class Users extends BaseModel {
   // public static table = 'users';
   public static connection = 'pg'
   
@@ -12,13 +12,13 @@ export default class User extends BaseModel {
   public role: string
   
   @column()
-  public mail: string
+  public email: string
   
   @column()
-  public firstName: string
+  public first_name: string
   
   @column()
-  public lastName: string
+  public last_name: string
   
   @column()
   public password: string
@@ -27,10 +27,10 @@ export default class User extends BaseModel {
   public token: boolean
   
   @column()
-  public phoneNumber: number
+  public phone_number: string
   
   @column.date()
-  public birthDate: DateTime
+  public birthday: DateTime
   
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

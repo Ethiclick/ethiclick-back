@@ -10,13 +10,13 @@ export default class Users extends BaseSchema {
        * Colonne
        */
       table.string('role')
-      table.string('mail')
-      table.string('firstName')
-      table.string('lastName')
+      table.string('email')
+      table.string('first_name')
+      table.string('last_name')
       table.string('password')
       table.boolean('token')
-      table.integer('phoneNumber')
-      table.date('birthDate')
+      table.string('phone_number')
+      table.date('birthday')
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
        */

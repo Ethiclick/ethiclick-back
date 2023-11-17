@@ -1,26 +1,16 @@
 
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import Database from '@ioc:Adonis/Lucid/Database'
+import Users from 'App/Models/User'
+import { DateTime } from 'luxon';
 
 
 export default class UsersController {
     
     public async index(ctx: HttpContextContract) {
-        // TODO: ajouter un select * from user avec les outils Query adonisJS
-        // return 
-        // await Database.query().from('users').select("*");
-        return [
-          {
-            id: 1,
-            title: 'Hello world',
-          },
-          {
-            id: 2,
-            title: 'Hello universe',
-          },
-        ]
 
+        const user = new Users();
 
+        await user.fill({role:'admin', email: 'fabwnklr@outlook.com', first_name: 'Fabien', last_name: 'Winkler', password: 'toto', phone_number: '0625454545', birthday: DateTime.fromFormat('1995-09-04', 'yyyy-MM-dd')}).save();
 
       }
 }
