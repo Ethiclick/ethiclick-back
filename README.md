@@ -23,3 +23,8 @@ node ace migration:run
 
 #Annuler la dernière migration
 node ace migration:rollback
+
+
+
+# REDIS
+install en local ou instance sur le server

@@ -6,7 +6,7 @@ import { DateTime } from 'luxon';
 
 export default class UsersController {
     
-    public async index(ctx: HttpContextContract) {
+    public async add(ctx: HttpContextContract) {
 
         const user = new Users();
 

@@ -55,7 +55,7 @@ const authConfig: AuthConfig = {
         type: 'api',
         driver: 'redis',
         redisConnection: 'local',
-        foreignKey: 'user_id',
+        foreignKey: 'id_user',
       },
 
       provider: {
