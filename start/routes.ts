@@ -29,7 +29,7 @@ Route.get('/', async () => {
 })
 
 // ** Users
-Route.get('/users', 'UsersController.add');
+Route.get('/users', 'UsersController.add'); //! utilisation du controller
 
 Route.post('/add', async () => {
   const password = await Hash.make("toto")

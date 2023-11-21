@@ -6,3 +6,4 @@ coverage
 .env
 tmp
 /.husky/commit-msg
+# database/seeders/User.ts

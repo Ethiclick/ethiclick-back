@@ -2,6 +2,7 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Users from 'App/Models/User'
 import { DateTime } from 'luxon';
+import Hash from '@ioc:Adonis/Core/Hash'
 
 
 export default class UsersController {
@@ -10,7 +11,16 @@ export default class UsersController {
 
         const user = new Users();
 
-        await user.fill({role:'admin', email: 'fabwnklr@outlook.com', first_name: 'Fabien', last_name: 'Winkler', password: 'toto', phone_number: '0625454545', birthday: DateTime.fromFormat('1995-09-04', 'yyyy-MM-dd')}).save();
+        await user.fill(
+          {
+            role: 'admin',
+            email: 'tata@outlook.fr',
+            first_name: 'tata',
+            last_name: 'tata',
+            password: await Hash.make("tata"),
+            phone_number: '0677777777',
+            birthday: DateTime.fromFormat('1900-01-03', 'yyyy-MM-dd')
+          }).save();
 
       }
 }
