@@ -24,6 +24,9 @@ node ace migration:run
 # Annuler la dernière migration
 node ace migration:rollback
 
+# Créer un seeder
+node ace make:seeder User
+
 # Executer les seeders (remplir des data définis dans la base)
 node ace db:seed                                        # Run tout les seeders
 node ace db:seed --files "./database/seeders/User.ts"   # Run un fichier spécifique

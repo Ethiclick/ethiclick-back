@@ -15,7 +15,7 @@ export default class UserSeeder extends BaseSeeder {
         last_name: 'toto',
         password: await Hash.make("toto"),
         phone_number: '0666666666',
-        birthday: DateTime.fromFormat('1990-09-04', 'yyyy-MM-dd')
+        birthday: DateTime.fromFormat('1990-09-04', 'yyyy-MM-dd');
       },
       {
         role: 'admin',

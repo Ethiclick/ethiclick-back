@@ -1,8 +1,5 @@
 **DATABASE**
 
-- Ajouter seeders pour les utilisateurs
-- Ajouter la table role -> adapter le champs dans la table user
-
-
-- Ajouter les fonctions utile dans les modèles (boot, hashpassword)
-        https://docs.adonisjs.com/reference/orm/base-model
+- Ajouter seeders pour les utilisateurs, categories, roles
+- Récupérer idrole et l'ajouter dans la migration des users
+- Ajouter les clé étrangère dans les models ?
