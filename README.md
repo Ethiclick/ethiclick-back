@@ -24,7 +24,9 @@ node ace migration:run
 # Annuler la dernière migration
 node ace migration:rollback
 
-
+# Executer les seeders (remplir des data définis dans la base)
+node ace db:seed                                        # Run tout les seeders
+node ace db:seed --files "./database/seeders/User.ts"   # Run un fichier spécifique
 
 # REDIS
 install en local ou instance sur le server
