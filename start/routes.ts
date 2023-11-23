@@ -29,59 +29,14 @@ Route.get('/', async () => {
 })
 
 // ** Users
-Route.get('/users', 'UsersController.add'); //! utilisation du controller
+Route.get('/add', 'UsersController.add');
 
-Route.post('/add', async () => {
-  const password = await Hash.make("toto")
-  const birthDate = DateTime.fromFormat('1990-09-04', 'yyyy-MM-dd')
-  
-  const user = new User()
-  try {
-    user
-    .fill({
-      role: 'admin',
-      email: 'toto@outlook.fr',
-      first_name: 'toto',
-      last_name: 'toto',
-      password: password,
-      phone_number: '0666666666',
-      birthday: birthDate
-    }).save();   
-  } catch (error) {
-    console.log(error)
-  }
-})
+// ** Authentification
+// Token d'authentification
+Route.get('/token/:id', "UsersController.getToken")
+// Login
+Route.post('login', 'UsersController.login')
 
-
-Route.get('/:id', async({ auth }) => {
-
-    const user = await User
-    .query()
-    .where('id', ':id')
-    .firstOrFail()
-
-  try {
-    const token = await auth.use('api').generate(user)
-    
-    return token
-  } catch (error) {
-    console.log(error)
-  }
-})
-// Authentification
-
-Route.post('login', async ({ auth, request, response }) => {
-  const email = request.input('email')
-  const password = request.input('password')
-   
-  try {
-    const token = await auth.use('api').attempt(email, password)
-    return token
-  } catch (error){
-    console.error(error.message);
-    return response.unauthorized('Invalid credentials')
-  }
-})
 
 // *** TEST de connexion redis
 Route.get('/test-redis', async ({ response }) => {
