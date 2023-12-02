@@ -9,14 +9,13 @@ export default class Users extends BaseSchema {
       /**
        * Colonne
        */
-      table.string('role')
+      table.integer('role')
       table.string('email')
-      table.string('first_name')
-      table.string('last_name')
       table.string('password')
       table.boolean('token')
       table.string('phone_number')
-      table.date('birthday')
+      table.string('avatar')
+
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
        */

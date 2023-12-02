@@ -12,10 +12,8 @@ export default class Client extends BaseModel {
   public surname: string
 
   @column.date()
-  public birth_date: DateTime
+  public birthday: DateTime
 
-  @column()
-  public avatar: string
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

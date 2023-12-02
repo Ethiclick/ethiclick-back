@@ -11,8 +11,8 @@ export default class Clients extends BaseSchema {
        */
       table.string('name')
       table.string('surname')
-      table.date('birth_date')
-      table.string('avatar')
+      table.date('birthday')
+
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
        */

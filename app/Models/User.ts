@@ -9,16 +9,10 @@ export default class Users extends BaseModel {
   public id: number
 
   @column()
-  public role: string
+  public role: number
   
   @column()
   public email: string
-  
-  @column()
-  public first_name: string
-  
-  @column()
-  public last_name: string
   
   @column()
   public password: string
@@ -28,9 +22,9 @@ export default class Users extends BaseModel {
   
   @column()
   public phone_number: string
-  
-  @column.date()
-  public birthday: DateTime
+
+  @column()
+  public avatar: string
   
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

@@ -70,12 +70,4 @@ export default class Professionnel extends BaseModel {
       localKey: 'idabo'
     })
     public id_abo: HasMany<typeof Abonnement>
-    // @hasOne(() => User, {
-    //   // pour tester lequel sera le nom de la colonne qui contiendra la clé étragnère
-    //   // ! namingStrategie Adonis -> snakeCase
-    //   serializeAs: 'serializeAs',
-    //   localKey: 'localKey',
-    //   foreignKey: 'user_pro'
-    // })
-    // public user: HasOne<typeof User>
 }
