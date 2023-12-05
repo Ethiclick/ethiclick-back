@@ -1,11 +1,7 @@
 **DATABASE**
 
 - Ajouter seeders
-    - Utilisateurs
-    - Categories 1-2-3
-    - Jours
-    - Roles
-    - PricesRanges
+    - Categories 1 => faire un points sur les pro dispo pour être sur qu'ils rentre chacun dans des catégories
 
 - Créer les routes :
     - Création user
