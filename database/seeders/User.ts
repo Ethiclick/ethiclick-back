@@ -15,10 +15,16 @@ export default class UserSeeder extends BaseSeeder {
         phone_number: '0666666666',
       },
       {
-        role: 1,
+        role: 2,
         email: 'tata@outlook.fr',
         password: await Hash.make("tata"),
         phone_number: '0677777777',
+      },
+      {
+        role: 3,
+        email: 'tutu@outlook.fr',
+        password: await Hash.make("tutu"),
+        phone_number: '0688888888',
       }
     ])
   }

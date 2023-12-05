@@ -10,6 +10,7 @@ export default class CategorieOnes extends BaseSchema {
        * Colonne
        */
       table.string('libelle')
+      table.string('bg_color')
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
        */

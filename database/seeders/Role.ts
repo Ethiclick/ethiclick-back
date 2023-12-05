@@ -10,7 +10,8 @@ export default class RoleSeeder extends BaseSeeder {
       },
       {
         libelle : 'professionnel'
-      },{
+      },
+      {
         libelle : 'client'
       }
     ])

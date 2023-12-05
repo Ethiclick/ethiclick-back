@@ -1,6 +1,14 @@
 **DATABASE**
 
-- Ajouter seeders pour les utilisateurs, categories 2 et cat3 égalements
-- Récupérer idrole et l'ajouter dans la migration des users
+- Ajouter seeders
+    - Utilisateurs
+    - Categories 1-2-3
+    - Jours
+    - Roles
+    - PricesRanges
 
+- Créer les routes :
+    - Création user
+    - Récupération catégories
+    - Récupération pro selon catégories
 - Ajouter les clé étrangère dans les models ?

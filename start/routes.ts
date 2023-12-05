@@ -33,7 +33,7 @@ Route.get('/add', 'UsersController.add');
 
 // ** Authentification
 // Token d'authentification
-Route.get('/token/:id', "UsersController.getToken")
+// Route.get('/token/:id', "UsersController.getToken")
 // Login
 Route.post('login', 'UsersController.login')
 
