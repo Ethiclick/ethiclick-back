@@ -13,16 +13,12 @@ export default class UserSeeder extends BaseSeeder {
         email: 'toto@outlook.fr',
         password: await Hash.make("toto"),
         phone_number: '0666666666',
-        // birthday: DateTime.fromFormat('1990-09-04', 'yyyy-MM-dd');
       },
       {
         role: 1,
         email: 'tata@outlook.fr',
-        // first_name: 'tata',
-        // last_name: 'tata',
         password: await Hash.make("tata"),
         phone_number: '0677777777',
-        // birthday: DateTime.fromFormat('1900-01-03', 'yyyy-MM-dd')
       }
     ])
   }
