@@ -1,15 +1,16 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, column, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
+import Role from 'App/Models/Role'
 
 export default class Users extends BaseModel {
   // public static table = 'users';
   public static connection = 'pg'
 
+  @hasOne(() => Role)
+  public idrole: HasOne<typeof Role>
+
   @column({ isPrimary: true })
   public id: number
-
-  @column()
-  public role: number
 
   @column()
   public email: string
@@ -39,4 +40,8 @@ export default class Users extends BaseModel {
 
   // @hasOne(() => Profile)
   // public profile: HasOne<typeof Profile>
+
+  // ! Clé étrangère
+  // idrole
+
 }

@@ -12,7 +12,7 @@ export default class UsersController {
 
     await user
       .fill({
-        role: 1,
+        idrole: 1,
         email: 'tata@outlook.fr',
         password: await Hash.make('tata'),
         phone_number: '0677777777',
