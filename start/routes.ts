@@ -19,9 +19,6 @@
 */
 import Route from '@ioc:Adonis/Core/Route'
 import Redis from '@ioc:Adonis/Addons/Redis'
-import User from 'App/Models/User';
-import Hash from '@ioc:Adonis/Core/Hash'
-import { DateTime } from 'luxon';
 
 
 Route.get('/', async () => {
@@ -29,13 +26,15 @@ Route.get('/', async () => {
 })
 
 // ** Users
+// add
 Route.get('/add', 'UsersController.add');
-
-// ** Authentification
-// Token d'authentification
-// Route.get('/token/:id', "UsersController.getToken")
 // Login
 Route.post('login', 'UsersController.login')
+
+
+// ** Categorie
+Route.get('/categorie', 'CategoriesController.get')
+
 
 
 // *** TEST de connexion redis
