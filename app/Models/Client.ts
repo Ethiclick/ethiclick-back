@@ -14,13 +14,12 @@ export default class Client extends BaseModel {
   @column.date()
   public birthday: DateTime
 
-
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
 
-    // ! Clé étrangère
-    // id_user
+  // ! Clé étrangère
+  // id_user
 }

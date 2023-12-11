@@ -3,7 +3,7 @@ import { BaseModel, column, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
 
 export default class CategorieThree extends BaseModel {
   static get table() {
-    return 'categorieThree';
+    return 'categorieThree'
   }
 
   @column({ isPrimary: true })

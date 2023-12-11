@@ -8,7 +8,6 @@ import PriceRange from './PriceRange'
 import Abonnement from './Abonnement'
 
 export default class Professionnel extends BaseModel {
-
   @column({ isPrimary: true })
   public id: number
 
@@ -39,35 +38,34 @@ export default class Professionnel extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
 
+  // ** Clé étrangère
+  @hasMany(() => User, {
+    localKey: 'iduser',
+  })
+  public id_user: HasMany<typeof User>
 
-    // ** Clé étrangère
-    @hasMany(() => User, {
-      localKey: 'iduser'
-    })
-    public id_user: HasMany<typeof User>
+  @hasMany(() => CategorieOne, {
+    localKey: 'idcat1',
+  })
+  public id_cat1: HasMany<typeof CategorieOne>
 
-    @hasMany(() => CategorieOne, {
-      localKey: 'idcat1'
-    })
-    public id_cat1: HasMany<typeof CategorieOne>
+  @hasMany(() => CategorieTwo, {
+    localKey: 'idcat2',
+  })
+  public id_cat2: HasMany<typeof CategorieTwo>
 
-    @hasMany(() => CategorieTwo, {
-      localKey: 'idcat2'
-    })
-    public id_cat2: HasMany<typeof CategorieTwo>
+  @hasMany(() => CategorieThree, {
+    localKey: 'idcat3',
+  })
+  public id_cat3: HasMany<typeof CategorieThree>
 
-    @hasMany(() => CategorieThree, {
-      localKey: 'idcat3'
-    })
-    public id_cat3: HasMany<typeof CategorieThree>
+  @hasMany(() => PriceRange, {
+    localKey: 'idprice',
+  })
+  public id_priceRange: HasMany<typeof PriceRange>
 
-    @hasMany(() => PriceRange, {
-      localKey: 'idprice'
-    })
-    public id_priceRange: HasMany<typeof PriceRange>
-
-    @hasMany(() => Abonnement, {
-      localKey: 'idabo'
-    })
-    public id_abo: HasMany<typeof Abonnement>
+  @hasMany(() => Abonnement, {
+    localKey: 'idabo',
+  })
+  public id_abo: HasMany<typeof Abonnement>
 }

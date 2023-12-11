@@ -9,13 +9,13 @@ export default class Horaire extends BaseModel {
   public open1: DateTime
 
   @column.date()
-  public close1 : DateTime
+  public close1: DateTime
 
   @column.date()
   public open2: DateTime
 
   @column.date()
-  public close2 : DateTime
+  public close2: DateTime
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

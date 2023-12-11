@@ -20,29 +20,25 @@
 import Route from '@ioc:Adonis/Core/Route'
 import Redis from '@ioc:Adonis/Addons/Redis'
 
-
 Route.get('/', async () => {
   return { hello: 'world' }
 })
 
 // ** Users
 // add
-Route.get('/add', 'UsersController.add');
+Route.get('/add', 'UsersController.add')
 // Login
 Route.post('login', 'UsersController.login')
-
 
 // ** Categorie
 Route.get('/categorie', 'CategoriesController.get')
 
-
-
 // *** TEST de connexion redis
 Route.get('/test-redis', async ({ response }) => {
   try {
-    await Redis.ping();
-    return response.send('Connected to Redis!');
+    await Redis.ping()
+    return response.send('Connected to Redis!')
   } catch (error) {
-    return response.status(500).send('Error connecting to Redis.');
+    return response.status(500).send('Error connecting to Redis.')
   }
-});
+})

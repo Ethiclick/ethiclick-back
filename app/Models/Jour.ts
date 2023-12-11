@@ -7,7 +7,7 @@ export default class Jours extends BaseModel {
 
   @column()
   public libelle: string
-  
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 
