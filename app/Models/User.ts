@@ -27,6 +27,9 @@ export default class Users extends BaseModel {
   @column()
   public avatar: string
 
+  @column()
+  public favoris: string // json => tableau d'identifiant des professionnels
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 

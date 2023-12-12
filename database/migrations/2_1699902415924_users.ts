@@ -9,12 +9,12 @@ export default class Users extends BaseSchema {
       /**
        * Colonne
        */
-      // table.integer('role')
       table.string('email')
       table.string('password')
       table.boolean('token')
       table.string('phone_number')
       table.string('avatar')
+      table.string('favoris')
 
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
