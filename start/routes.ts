@@ -19,16 +19,20 @@
 */
 import Route from '@ioc:Adonis/Core/Route'
 import Redis from '@ioc:Adonis/Addons/Redis'
+import HealthCheck from '@ioc:Adonis/Core/HealthCheck'
 
 Route.get('/', async () => {
   return { hello: 'world' }
 })
 
 // ** Users
-// add
-Route.get('/add', 'UsersController.add')
 // Login
-Route.post('login', 'UsersController.login')
+Route.group(() => {
+  // registration logic
+  Route.post('register', 'UsersController.register').as('register')
+  Route.post('login', 'UsersController.login').as('login')
+  Route.post('logout', 'UsersController.logout').as('logout')
+})
 
 // ** Categorie
 Route.get('/categorie', 'CategoriesController.get')
@@ -41,4 +45,11 @@ Route.get('/test-redis', async ({ response }) => {
   } catch (error) {
     return response.status(500).send('Error connecting to Redis.')
   }
+})
+
+// check db connection
+Route.get('health', async ({ response }) => {
+  const report = await HealthCheck.getReport()
+
+  return report.healthy ? response.ok(report) : response.badRequest(report)
 })

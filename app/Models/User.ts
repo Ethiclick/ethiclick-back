@@ -46,5 +46,4 @@ export default class Users extends BaseModel {
 
   // ! Clé étrangère
   // idrole
-
 }
