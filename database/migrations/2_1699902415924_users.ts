@@ -11,6 +11,7 @@ export default class Users extends BaseSchema {
        */
       table.string('email')
       table.string('password')
+      table.string('username')
       table.boolean('token')
       table.string('phone_number')
       table.string('avatar')

@@ -31,6 +31,10 @@ export default class UsersController {
     }
   }
 
+  /**
+   * Création d'un utilisateur
+   * @returns {Boolean}
+   */
   public async register({ request, response }: HttpContextContract) {
     // validate email
     const validations = schema.create({
@@ -43,6 +47,7 @@ export default class UsersController {
     const user = await Users.create(data)
     return response.created(user)
   }
+
   /**
    * login
    * @returns {Object} Token d'authentification
@@ -67,6 +72,30 @@ export default class UsersController {
       })
     }
   }
+
+
+  public async update ({ auth, request, response }: HttpContextContract) {
+    // TODO: ajouter vérif si on a pas tout les champs on envoi en valid que ceux qu'on à
+    // validation des champs
+    const validations = schema.create({
+      email: schema.string({}, [rules.email()]),
+      password: schema.string({}, [rules.confirmed()]),
+      id: schema.number(),
+      username: schema.string()
+    })
+    // Validation des données de la requête
+    const data = await request.validate({ schema: validations })
+
+    // Récupération de l'utilisateur authentifié
+    const user = await Users.findOrFail(data.id)
+
+
+    // Mettre à jour
+    user.username = data.username
+    await user.save()
+    return request
+  }
+
 
   // logout function
   public async logout({ auth, response }: HttpContextContract) {

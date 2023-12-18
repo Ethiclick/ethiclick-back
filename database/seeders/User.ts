@@ -13,6 +13,7 @@ export default class UserSeeder extends BaseSeeder {
         email: 'toto@outlook.fr',
         password: await Hash.make('toto'),
         phone_number: '0666666666',
+        username: "Toto"
       },
       {
         // idrole: 2,

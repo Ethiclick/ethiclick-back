@@ -31,6 +31,7 @@ Route.group(() => {
   // registration logic
   Route.post('register', 'UsersController.register').as('register')
   Route.post('login', 'UsersController.login').as('login')
+  Route.post('update', 'UsersController.update').as('update')
   Route.post('logout', 'UsersController.logout').as('logout')
 })
 
