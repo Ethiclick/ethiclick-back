@@ -74,28 +74,43 @@ export default class UsersController {
   }
 
 
-  public async update ({ auth, request, response }: HttpContextContract) {
-    // TODO: ajouter vérif si on a pas tout les champs on envoi en valid que ceux qu'on à
-    // validation des champs
-    const validations = schema.create({
-      email: schema.string({}, [rules.email()]),
-      password: schema.string({}, [rules.confirmed()]),
-      id: schema.number(),
-      username: schema.string()
-    })
-    // Validation des données de la requête
-    const data = await request.validate({ schema: validations })
+  /**
+   * update
+   * Met à jour les champs: usernmae, password, phone_number & avatar
+   * @returns {String} Json
+   */
+  public async update ({ request, response }: HttpContextContract) {
+    try {
+      // TODO: ajouter vérif si des champs sont vide return erreur user friendly
+      // validation des champs
+      const validations = schema.create({
+        password: schema.string({}, [rules.confirmed()]),
+        id: schema.number(),
+        username: schema.string(),
+        phone_number: schema.string({}, [rules.maxLength(12), rules.minLength(10)]),
+        avatar: schema.string({})
+      })
+      // Validation des données de la requête
+      const data = await request.validate({ schema: validations })
 
-    // Récupération de l'utilisateur authentifié
-    const user = await Users.findOrFail(data.id)
+      // Récupération de l'utilisateur authentifié
+      const user = await Users.findOrFail(data.id)
+  
+  
+      // Mettre à jour
+      user.username = data.username
+      user.password = await Hash.make(data.password)
+      user.phone_number = data.phone_number
+      user.avatar = data.avatar
 
+  
+      await user.save()
 
-    // Mettre à jour
-    user.username = data.username
-    await user.save()
-    return request
+      return response.status(200).send({ message: 'Utilisateur mis à jour avec succès' });
+    } catch (error) {
+      return response.status(422).send(error.messages);
+    }
   }
-
 
   // logout function
   public async logout({ auth, response }: HttpContextContract) {
