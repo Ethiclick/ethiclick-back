@@ -112,6 +112,31 @@ export default class UsersController {
     }
   }
 
+  public async setFavoris ({ request, response }: HttpContextContract) {
+    try {
+      // TODO: ajouter vérif si des champs sont vide return erreur user friendly
+      // validation des champs
+      const validations = schema.create({
+        id: schema.number(),
+        favoris: schema.string([rules.json()]),
+      })
+      // Validation des données de la requête
+      const data = await request.validate({ schema: validations })
+      
+      // Récupération de l'utilisateur authentifié
+      const user = await Users.findOrFail(data.id)
+  
+      // Mettre à jour
+      user.favoris = data.favoris
+
+      await user.save()
+
+      return response.status(200).send({ message: 'Favoris mis à jour avec succès' });
+    } catch (error) {
+      return response.send({ message: "Erreur lors de la mise à jour des favoris"})
+    }
+  }
+
   // logout function
   public async logout({ auth, response }: HttpContextContract) {
     await auth.logout()
