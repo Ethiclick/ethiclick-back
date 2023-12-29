@@ -33,7 +33,6 @@ export default class UsersController {
 
   /**
    * Création d'un utilisateur
-   * @returns {Boolean}
    */
   public async register({ request, response }: HttpContextContract) {
     // validate email
@@ -73,13 +72,11 @@ export default class UsersController {
     }
   }
 
-
   /**
    * update
    * Met à jour les champs: usernmae, password, phone_number & avatar
-   * @returns {String} Json
    */
-  public async update ({ request, response }: HttpContextContract) {
+  public async update({ request, response }: HttpContextContract): Promise<void> {
     try {
       // TODO: ajouter vérif si des champs sont vide return erreur user friendly
       // validation des champs
@@ -88,31 +85,29 @@ export default class UsersController {
         id: schema.number(),
         username: schema.string(),
         phone_number: schema.string({}, [rules.maxLength(12), rules.minLength(10)]),
-        avatar: schema.string({})
+        avatar: schema.string({}),
       })
       // Validation des données de la requête
       const data = await request.validate({ schema: validations })
 
       // Récupération de l'utilisateur authentifié
       const user = await Users.findOrFail(data.id)
-  
-  
+
       // Mettre à jour
       user.username = data.username
       user.password = await Hash.make(data.password)
       user.phone_number = data.phone_number
       user.avatar = data.avatar
 
-  
       await user.save()
 
-      return response.status(200).send({ message: 'Utilisateur mis à jour avec succès' });
+      return response.status(200).send({ message: 'Utilisateur mis à jour avec succès' })
     } catch (error) {
-      return response.status(422).send(error.messages);
+      return response.status(422).send(error.messages)
     }
   }
 
-  public async setFavoris ({ request, response }: HttpContextContract) {
+  public async setFavoris({ request, response }: HttpContextContract) {
     try {
       // TODO: ajouter vérif si des champs sont vide return erreur user friendly
       // validation des champs
@@ -122,18 +117,18 @@ export default class UsersController {
       })
       // Validation des données de la requête
       const data = await request.validate({ schema: validations })
-      
+
       // Récupération de l'utilisateur authentifié
       const user = await Users.findOrFail(data.id)
-  
+
       // Mettre à jour
       user.favoris = data.favoris
 
       await user.save()
 
-      return response.status(200).send({ message: 'Favoris mis à jour avec succès' });
+      return response.status(200).send({ message: 'Favoris mis à jour avec succès' })
     } catch (error) {
-      return response.send({ message: "Erreur lors de la mise à jour des favoris"})
+      return response.send({ message: 'Erreur lors de la mise à jour des favoris' })
     }
   }
 

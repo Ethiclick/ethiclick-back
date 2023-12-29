@@ -10,9 +10,9 @@
 import { validator } from '@ioc:Adonis/Core/Validator'
 
 validator.rule('json', (value, _, options) => {
-    try {
-        JSON.parse(value);
-      } catch (e) {
-        return 'Invalid JSON format';
-      }
+  try {
+    JSON.parse(value)
+  } catch (e) {
+    return 'Invalid JSON format'
+  }
 })

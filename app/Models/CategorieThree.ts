@@ -2,7 +2,7 @@ import { DateTime } from 'luxon'
 import { BaseModel, column, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
 
 export default class CategorieThree extends BaseModel {
-  static get table() {
+  public static get table() {
     return 'categorieThree'
   }
 

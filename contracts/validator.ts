@@ -1,5 +1,5 @@
 declare module '@ioc:Adonis/Core/Validator' {
-    interface Rules {
-      json(): Rule
-    }
-  }  
+  interface Rules {
+    json(): Rule
+  }
+}
