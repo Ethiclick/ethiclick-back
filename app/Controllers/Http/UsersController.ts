@@ -113,7 +113,7 @@ export default class UsersController {
       // validation des champs
       const validations = schema.create({
         id: schema.number(),
-        favoris: schema.string([rules.json()]),
+        favoris: schema.string({}, [rules.json()]),
       })
       // Validation des données de la requête
       const data = await request.validate({ schema: validations })
