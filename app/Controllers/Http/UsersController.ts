@@ -45,6 +45,8 @@ export default class UsersController {
     data.password = await Hash.make(data.password)
     const user = await Users.create(data)
     return response.created(user)
+    // TODO: adaptation a faire: ajout d'un try/catch pour retourner un boolean plutot que le user
+    // TODO: Ajout d'une etape si on s'enregistre en tant que professionnel ou client => ajout dans les tables correspondantes + formulaire différent (pour les client on affiche et on permet de passer sans remplir tout le formulaire, pour les pros par contre obligation de remplir tout les champs)
   }
 
   /**
@@ -107,7 +109,7 @@ export default class UsersController {
     }
   }
 
-  public async setFavoris({ request, response }: HttpContextContract) {
+  public async setFavoris({ request, response }: HttpContextContract) : Promise<void> {
     try {
       // validation des champs
       const validations = schema.create({
@@ -131,7 +133,7 @@ export default class UsersController {
     }
   }
 
-  public async getFavoris ({ request, response } : HttpContextContract) {
+  public async getFavoris ({ request, response } : HttpContextContract) : Promise<void> {
     try {
       const validations = schema.create({
         id: schema.number()

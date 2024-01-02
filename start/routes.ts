@@ -37,6 +37,8 @@ Route.group(() => {
   Route.post('logout', 'UsersController.logout').as('logout')
 })
 
+Route.get('/professionnel', 'ProfessionnelsController.get')
+
 // ** Categorie
 Route.get('/categorie', 'CategoriesController.get')
 

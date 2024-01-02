@@ -6,14 +6,9 @@ export default class CategoriesController {
    * login
    * @returns {Object} Token d'authentification
    */
-  public async get({ auth, request, response }) {
-    console.log(auth)
-    console.log(request)
-    console.log(response)
+  public async get() {
 
     const Categorie = await CategorieOne.all()
-    // .orderBy('id', 'asc')
-
     return Categorie
   }
 }
