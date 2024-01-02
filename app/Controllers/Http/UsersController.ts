@@ -109,7 +109,6 @@ export default class UsersController {
 
   public async setFavoris({ request, response }: HttpContextContract) {
     try {
-      // TODO: ajouter vérif si des champs sont vide return erreur user friendly
       // validation des champs
       const validations = schema.create({
         id: schema.number(),
@@ -132,6 +131,21 @@ export default class UsersController {
     }
   }
 
+  public async getFavoris ({ request, response } : HttpContextContract) {
+    try {
+      const validations = schema.create({
+        id: schema.number()
+      })
+
+      const data = await request.validate({ schema : validations });
+
+      const user = await Users.findOrFail(data.id);
+
+      return response.status(200).send({ favoris: user.favoris });
+    } catch (error) {
+      return response.status(400).send({ message: "Erreur lors de la récupération des favoris" })
+    }
+  }
   // logout function
   public async logout({ auth, response }: HttpContextContract) {
     await auth.logout()
