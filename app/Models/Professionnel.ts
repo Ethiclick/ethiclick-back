@@ -27,7 +27,7 @@ export default class Professionnel extends BaseModel {
   public website: string
 
   @column()
-  public acc_carte: boolean
+  public acc_card: boolean
 
   @column()
   public photos: string[]

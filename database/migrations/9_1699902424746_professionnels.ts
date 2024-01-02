@@ -15,7 +15,7 @@ export default class Professionnels extends BaseSchema {
       table.integer('postalCode', 5)
       table.string('website')
       table.boolean('acc_card')
-      table.json('photos')
+      table.jsonb('photos')
 
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL

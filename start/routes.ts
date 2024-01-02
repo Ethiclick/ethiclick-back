@@ -26,7 +26,6 @@ Route.get('/', async () => {
 })
 
 // ** Users
-// Login
 Route.group(() => {
   // registration logic
   Route.post('register', 'UsersController.register').as('register')
@@ -37,7 +36,11 @@ Route.group(() => {
   Route.post('logout', 'UsersController.logout').as('logout')
 })
 
-Route.get('/professionnel', 'ProfessionnelsController.get')
+// ** Professionnel
+Route.group(()=> {
+  Route.get('professionnel/', 'ProfessionnelsController.get')
+  Route.post('professionnel/update', 'ProfessionnelsController.update')
+})
 
 // ** Categorie
 Route.get('/categorie', 'CategoriesController.get')
