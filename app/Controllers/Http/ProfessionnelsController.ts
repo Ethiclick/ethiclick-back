@@ -44,4 +44,13 @@ export default class ProfessionnelsController {
     }
   }
 
+  public async getById({ params }) {
+    // return "TOTO";
+    return params
+    // return request
+    // return auth
+    // return response
+    // const user = await User.find(1);
+  }
+
 }

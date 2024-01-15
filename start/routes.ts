@@ -38,8 +38,10 @@ Route.group(() => {
 
 // ** Professionnel
 Route.group(()=> {
-  Route.get('professionnel/', 'ProfessionnelsController.get')
+  // TODO: gérer le getByid
+  Route.get('professionnel/:id', 'ProfessionnelsController.getById')
   Route.post('professionnel/update', 'ProfessionnelsController.update')
+  Route.get('professionnel/', 'ProfessionnelsController.get')
 })
 
 // ** Categorie
