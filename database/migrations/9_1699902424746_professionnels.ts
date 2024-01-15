@@ -9,13 +9,13 @@ export default class Professionnels extends BaseSchema {
       /**
        * Colonne
        */
-      table.integer('siret')
+      table.string('siret')
       table.string('adresse')
       table.string('city')
-      table.integer('postalCode', 5)
+      table.integer('postal_code', 5)
       table.string('website')
       table.boolean('acc_card')
-      table.jsonb('photos')
+      table.string('photos')
 
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL

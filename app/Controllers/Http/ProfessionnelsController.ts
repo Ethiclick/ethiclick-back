@@ -1,7 +1,6 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Professionnel from "App/Models/Professionnel";
-import { rules, schema } from '@ioc:Adonis/Core/Validator'
-
+import { schema } from '@ioc:Adonis/Core/Validator'
 
 export default class ProfessionnelsController {
   public async get () {
@@ -17,22 +16,22 @@ export default class ProfessionnelsController {
         // siret : Est ce qu'on peut mettre à jour un siret?
         adresse: schema.string(),
         city: schema.string(),
-        postalCode: schema.number(),
-        // TODO: ajouter une rules pour vérifier l'url
+        postal_code: schema.number(),
+        // TODO: ajouter une rules avec une regex pour vérifier l'url
         website: schema.string(),
         acc_card: schema.boolean(),
-        photos: schema.array().members(schema.string())
+        photos: schema.string(),
       })
+
       // Validation des données de la requête
       const data = await request.validate({ schema: validations })
-
-      // Récupération de l'utilisateur authentifié
+      // Récupération de l'utilisateur à modifier
       const pro = await Professionnel.findOrFail(data.id)
 
       // Mettre à jour
       pro.adresse = data.adresse
       pro.city = data.city
-      pro.postalCode = data.postalCode
+      pro.postal_code = data.postal_code
       pro.website = data.website
       pro.acc_card = data.acc_card
       pro.photos = data.photos
@@ -41,7 +40,7 @@ export default class ProfessionnelsController {
 
       return response.status(200).send({ message: 'Profil mis à jour avec succès' })
     } catch (error) {
-      return response.status(422).send(error.messages)
+      return response.send({ message: "Erreur lors de la mise à jour - " + error.message });
     }
   }
 

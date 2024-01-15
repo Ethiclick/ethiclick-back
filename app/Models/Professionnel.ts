@@ -12,7 +12,7 @@ export default class Professionnel extends BaseModel {
   public id: number
 
   @column()
-  public siret: number
+  public siret: string
 
   @column()
   public adresse: string
@@ -21,7 +21,7 @@ export default class Professionnel extends BaseModel {
   public city: string
 
   @column()
-  public postalCode: number
+  public postal_code: number
 
   @column()
   public website: string
@@ -30,7 +30,7 @@ export default class Professionnel extends BaseModel {
   public acc_card: boolean
 
   @column()
-  public photos: string[]
+  public photos: string
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
