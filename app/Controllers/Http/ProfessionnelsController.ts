@@ -1,6 +1,6 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Professionnel from "App/Models/Professionnel";
-import { schema } from '@ioc:Adonis/Core/Validator'
+import { rules, schema } from '@ioc:Adonis/Core/Validator'
 
 export default class ProfessionnelsController {
   public async get () {
@@ -10,6 +10,7 @@ export default class ProfessionnelsController {
 
   public async update({ request, response }: HttpContextContract): Promise<void> {
     try {
+      let regexUrl = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w\-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/;
       // validation des champs
       const validations = schema.create({
         id: schema.number(),
@@ -17,8 +18,7 @@ export default class ProfessionnelsController {
         adresse: schema.string(),
         city: schema.string(),
         postal_code: schema.number(),
-        // TODO: ajouter une rules avec une regex pour vérifier l'url
-        website: schema.string(),
+        website: schema.string([rules.regex(regexUrl)]),
         acc_card: schema.boolean(),
         photos: schema.string(),
       })
@@ -40,7 +40,7 @@ export default class ProfessionnelsController {
 
       return response.status(200).send({ message: 'Profil mis à jour avec succès' })
     } catch (error) {
-      return response.send({ message: "Erreur lors de la mise à jour - " + error.message });
+      return response.send(error.messages);
     }
   }
 
