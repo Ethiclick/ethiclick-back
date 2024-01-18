@@ -44,9 +44,16 @@ export default class ProfessionnelsController {
     }
   }
 
-  public async getById({ params }) {
-    const pro = Professionnel.find(params.id);
-    return pro;
+  public async getById({ params, response }) {
+    try {
+      const pro = await Professionnel.find(params.id);
+      if (!pro) {
+        return response.status(404).send({ message: 'Professionnel non trouvé' });
+      }
+      
+      return pro;
+    } catch (error) {
+      return response.status(500).send({ message: error.message });
+    }
   }
-
 }
