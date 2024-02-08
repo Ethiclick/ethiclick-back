@@ -33,14 +33,59 @@ export default class CategoriesController {
   }
 
   public async add({ request, response }: HttpContextContract): Promise<void> {
-    console.log(request);
-    console.log(response);
-    const validations = schema.create({
-      id_parent: schema.number(),
-      libelle: schema.string(),
-      libelle_parent: schema.string(),
-      level: schema.number()
-    })
+    try {
+      // TODO: ajouter une vérification si data.libelle existe déjà => Erreur
+      // TODO: ajouter !== si pas de level 1 alors on à aussi besoin de l'id_parent ou à défault libelle_parent
+
+      const validations = schema.create({
+        libelle: schema.string.optional(),
+        level: schema.number.optional(),
+        bg_color: schema.string.optional(),
+        id: schema.number(),
+      })
+  
+      const data = await request.validate({ schema: validations });
+  
+      let categorie;
+
+      // Level 1
+      if (data.level == 1) {
+          if (data.id) {
+            categorie = await CategorieOne.findOrFail(data.id)
+          } else {
+            categorie = new CategorieOne();
+          }
+      }
+      // Level 2
+      if (data.level == 2) {
+          if (data.id) {
+            categorie = await CategorieTwo.findOrFail(data.id)
+          } else {
+            categorie = new CategorieTwo();
+          }
+      }
+      // Level 3
+      if (data.level == 3) {
+          if (data.id) {
+            categorie = await CategorieThree.findOrFail(data.id)
+          } else {
+            categorie = new CategorieThree();
+          }
+      }
+
+
+      categorie.libelle = data.libelle;
+      categorie.bg_color = data.bg_color;
+  
+      await categorie.save();
+      // console.log(categorie.$isPersisted); //! check si la valeur à bien été enregistré en base
+
+      return response.status(200).send({ message: 'Catégorie ajouté avec succès'});
+
+    } catch (error) {
+        return response.status(422).send(error.messages);
+    }
+   
   }
   
 }
