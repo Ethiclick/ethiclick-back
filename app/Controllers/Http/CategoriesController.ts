@@ -34,28 +34,36 @@ export default class CategoriesController {
 
   public async add({ request, response }: HttpContextContract): Promise<void> {
     try {
-      // TODO: ajouter une vérification si data.libelle existe déjà => Erreur
-      // TODO: ajouter !== si pas de level 1 alors on à aussi besoin de l'id_parent ou à défault libelle_parent
+      // TODO: ajouter !== si pas level 1 alors on à aussi besoin de l'id_parent ou à défault libelle_parent
 
       const validations = schema.create({
         libelle: schema.string.optional(),
-        level: schema.number.optional(),
+        level: schema.number(),
         bg_color: schema.string.optional(),
-        id: schema.number(),
+        id: schema.number.optional(),
       })
   
       const data = await request.validate({ schema: validations });
-  
       let categorie;
+      let msg;
 
       // Level 1
       if (data.level == 1) {
+          msg = "mis à jour";
           if (data.id) {
-            categorie = await CategorieOne.findOrFail(data.id)
-          } else {
+            // On check avec l'id si la categorie existe déjà
+            categorie = await CategorieOne.find(data.id)
+          } else if (data.libelle && !categorie) {
+            // On check si le libelle existe déjà
+            categorie = await CategorieOne.query().whereRaw('LOWER(libelle) = LOWER(?)', [data.libelle]).first();
+          }
+          // Sinon c'est une nouvelle catégorie
+          if (!categorie) {
             categorie = new CategorieOne();
+            msg = "ajouté";
           }
       }
+
       // Level 2
       if (data.level == 2) {
           if (data.id) {
@@ -73,15 +81,13 @@ export default class CategoriesController {
           }
       }
 
-
       categorie.libelle = data.libelle;
+
+      // TODO: si bg_color n'est pas définis generate random
       categorie.bg_color = data.bg_color;
   
       await categorie.save();
-      // console.log(categorie.$isPersisted); //! check si la valeur à bien été enregistré en base
-
-      return response.status(200).send({ message: 'Catégorie ajouté avec succès'});
-
+      return response.status(200).send({ message: `Catégorie ${msg} avec succès`});
     } catch (error) {
         return response.status(422).send(error.messages);
     }
