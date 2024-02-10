@@ -39,7 +39,7 @@ export default class CategoriesController {
       const validations = schema.create({
         libelle: schema.string.optional(),
         level: schema.number(),
-        bg_color: schema.string.optional(),
+        color: schema.string.optional(),
         id: schema.number.optional(),
       })
   
@@ -84,7 +84,7 @@ export default class CategoriesController {
       categorie.libelle = data.libelle;
 
       // TODO: si bg_color n'est pas définis generate random
-      categorie.bg_color = data.bg_color;
+      categorie.color = data.color;
   
       await categorie.save();
       return response.status(200).send({ message: `Catégorie ${msg} avec succès`});

@@ -10,6 +10,8 @@ export default class CategorieTwos extends BaseSchema {
        * Colonne
        */
       table.string('libelle')
+      table.string('color')
+
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
        */

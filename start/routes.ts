@@ -51,6 +51,7 @@ Route.group(() => {
   Route.get('/categorieThree', 'CategoriesController.getCatThree')
   // TODO: get => récupérer toutes les catégories définis dans les différentes tables cat
   
+  // Ajout/update de categorie selon les paramètres envoyé
   Route.post('/categorie/add', 'CategoriesController.add')
 })
 

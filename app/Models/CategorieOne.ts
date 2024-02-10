@@ -9,7 +9,8 @@ export default class CategorieOne extends BaseModel {
   public libelle: string
 
   @column()
-  public bg_color: string // code rgba
+  // Format rgba
+  public color: string
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

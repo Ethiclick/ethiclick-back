@@ -9,6 +9,10 @@ export default class CategorieThree extends BaseModel {
   @column()
   public libelle: string
 
+  @column()
+  // format rgba
+  public color: string
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 
