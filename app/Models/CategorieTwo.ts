@@ -1,5 +1,6 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
+import CategorieOne from './CategorieOne'
 
 export default class CategorieTwo extends BaseModel {
   @column({ isPrimary: true })
@@ -19,5 +20,14 @@ export default class CategorieTwo extends BaseModel {
   public updatedAt: DateTime
 
   // ! Clé étrangère
+  @column()
+  public idcat1: number
   // id_cat1
+  @hasOne(() => CategorieOne, {
+    foreignKey: 'id', // id column on "CategorieOne" model
+  })
+  public profile: HasOne<typeof CategorieOne>
+
+
+  
 }

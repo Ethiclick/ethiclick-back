@@ -75,37 +75,37 @@ export default class CategoriesController {
           // On check avec l'id si la categorie existe déjà
           categorie = await CategorieTwo.find(data.id)
         } else if (data.libelle && !categorie) {
-          // On check si le libelle existe déjà
-          categorie = await CategorieTwo.query().whereRaw('LOWER(libelle) = LOWER(?)', [data.libelle]).first();
+            // On check si le libelle existe déjà
+            categorie = await CategorieTwo.query().whereRaw('LOWER(libelle) = LOWER(?)', [data.libelle]).first();
         } 
 
         // Avant de créer une nouvel occurence on check si on à bien les infos nécessaire
         if (!data.id_parent && !data.libelle_parent) {
-          return response.status(422).send({ message :"Veuillez renseigner l'identifiant de la catégorie parente"});
+          return response.status(422).send({ message :"Veuillez renseigner l'identifiant de la catégorie parente ou son libelle"});
         }
+
 
         let categorieParent;
-        // Ensuite on check que le libelle & l'id parent correspondent bien à une categorie qui existe
+        // Ensuite on check que  l'id parent correspondent bien à une categorie qui existe
         if (data.id_parent) {
-          try {
-            categorieParent = await CategorieOne.findOrFail(data.id_parent);
-            return categorieParent;
-            
-          } catch (error) {
-            console.log(error);
-          }
-
+          categorieParent = await CategorieOne.find(data.id_parent);    
+        }
+        // Ou a défaut si le libelle existe
+        if (!categorieParent && data.libelle_parent) {
+          categorieParent = await CategorieOne.query().whereRaw('LOWER(libelle) = LOWER(?)', [data.libelle_parent]).first();
         }
 
+        // Si on à pas trouvé de catégorie parente => erreur
+        if (!categorieParent) {
+          return response.status(422).send({ message :"Aucune catégorie parente trouvé avec cet identifiant et/ou libellé"});
+        }
         // Sinon c'est une nouvelle catégorie à ajouter
         if (!categorie) {
+          // return "Création de categorie";
           categorie = new CategorieTwo();
           msg = "ajouté";
         }
-
-        // ! gérer l'ajout
-        // ! Puis l'update
-        return categorie;
+        categorie.idcat1 = categorieParent.id;
       }
 
 
@@ -119,12 +119,13 @@ export default class CategoriesController {
           }
       }
 
+      // categorie.idcat1 = data.id_parent;
       categorie.libelle = data.libelle;
-      // TODO: si bg_color n'est pas définis generate random
+      // TODO: si bg_color n'est pas définis generate random, coté front ???
       categorie.color = data.color;
-  
+
       await categorie.save();
-      return response.status(200).send({ message: `Catégorie ${msg} avec succès`});
+      return response.status(200).send({ message: `Catégorie ${data.libelle} ${msg} avec succès`});
     } catch (error) {
         return response.status(422).send(error.messages);
     }

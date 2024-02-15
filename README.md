@@ -45,5 +45,5 @@ node ace db:seed --files "./database/seeders/User.ts" # Run un fichier spécifiq
 
 install en local ou instance sur le server
 
-Lancer le server redis
+Lancer le server redis en wsl
 sudo service redis-server start
