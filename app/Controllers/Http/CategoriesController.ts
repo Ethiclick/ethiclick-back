@@ -7,6 +7,8 @@ import CategorieTwo from 'App/Models/CategorieTwo'
 import CategorieThree from 'App/Models/CategorieThree'
 
 export default class CategoriesController {
+  // TODO: regrouper ces 3 fonction en 1 seul avc un param level & id
+  // TODO: ajouter la récupération de tout les niveaux de catégorie
   /**
    * Retourne les catégories de niveau 1
    * @returns {Json} Retourne un json de toutes les occurences trouvé en base
@@ -15,7 +17,6 @@ export default class CategoriesController {
     const Categorie1 = await CategorieOne.all()
     return Categorie1
   }
-
   /**
    * Retourne les catégories de niveau 2
    * @returns {Json} Retourne un json de toutes les occurences trouvé en base
@@ -24,7 +25,6 @@ export default class CategoriesController {
     const Categorie2 = await CategorieTwo.all()
     return Categorie2
   }
-
   /**
    * Retourne les catégories de niveau 3
    * @returns {Json} Retourne un json de toutes les occurences trouvé en base
@@ -36,8 +36,8 @@ export default class CategoriesController {
 
   public async add({ request, response }: HttpContextContract): Promise<void> {
     try {
-      // TODO: ajouter !== si pas level 1 alors on à aussi besoin de l'id_parent ou à défault libelle_parent
-      // TODO: ajouter fonction pour chaque niveau
+
+      // TODO: Amélioration : compartimenter les levels - regrouper le code répéter
       const validations = schema.create({
         libelle: schema.string.optional(),
         level: schema.number(),
