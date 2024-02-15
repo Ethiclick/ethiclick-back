@@ -1,5 +1,6 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
+import CategorieTwo from './CategorieTwo'
 
 export default class CategorieThree extends BaseModel {
 
@@ -19,6 +20,11 @@ export default class CategorieThree extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
 
-  // ! Clé étrangère
-  // id_cat2
+  // ! Clé étrangère de categorie 2
+  @column()
+  public idcat2: number
+  @hasOne(() => CategorieTwo, {
+    foreignKey: 'id', // id column on "CategorieOne" model
+  })
+  public profile: HasOne<typeof CategorieTwo>
 }

@@ -108,8 +108,6 @@ export default class CategoriesController {
         categorie.idcat1 = categorieParent.id;
       }
 
-
-      // TODO: Ajouter catégorie de niveau 3
       // Level 3
       if (data.level == 3) {
         msg = "mis à jour";
@@ -142,14 +140,12 @@ export default class CategoriesController {
         }
         // Sinon c'est une nouvelle catégorie à ajouter
         if (!categorie) {
-          // return "Création de categorie";
           categorie = new CategorieThree();
           msg = "ajouté";
         }
-        categorie.idcat1 = categorieParent.id;
+        categorie.idcat2 = categorieParent.id;
       }
 
-      // categorie.idcat1 = data.id_parent;
       categorie.libelle = data.libelle;
       // TODO: si color n'est pas définis generate random, coté front ???
       categorie.color = data.color;
@@ -159,7 +155,6 @@ export default class CategoriesController {
     } catch (error) {
         return response.status(422).send(error.messages);
     }
-   
   }
   
 }
