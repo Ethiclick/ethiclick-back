@@ -158,21 +158,18 @@ export default class CategoriesController {
   
   public async getAll() {
     try {
-      // On récupère toutes les catégorie de tout les niveaux avec les jointures
-      const result = await Database
-      .from('categorie_ones')
-      .join('categorie_twos', 'categorie_ones.id', '=', 'categorie_twos.idcat1')
-      .join('categorie_threes', 'categorie_twos.id', '=', 'categorie_threes.idcat2')
-      .select('categorie_ones.*')
-      .select('categorie_twos.libelle AS level2')
-      .select('categorie_threes.libelle AS level3')
-      .groupByRaw("categorie_ones.id, categorie_twos.libelle, categorie_threes.libelle")
+      const query = await Database
+        .from('categorie_ones')
+        .join('categorie_twos', 'categorie_ones.id', '=', 'categorie_twos.idcat1')
+        .join('categorie_threes', 'categorie_twos.id', '=', 'categorie_threes.idcat2')
+        .select('categorie_ones.*')
+        .select('categorie_twos.libelle AS level2', 'categorie_twos.color AS level2_color', 'categorie_twos.id AS level2_id')
+        .select('categorie_threes.libelle AS level3', 'categorie_threes.color AS level3_color', 'categorie_threes.id AS level3_id');
 
 
-        // Et on imbrique le résulltats pour avoir un retour propre
-      const results = result.reduce((acc, curr) => {
+      const results = query.reduce((acc, curr) => {
         if (!acc.id) {
-          // First iteration
+          // Première itérations
           acc.id = curr.id;
           acc.libelle = curr.libelle;
           acc.color = curr.color;
@@ -180,12 +177,10 @@ export default class CategoriesController {
           acc.updated_at = curr.updated_at;
           acc.level2 = {};
         }
-        
         if (!acc.level2[curr.level2]) {
-          acc.level2[curr.level2] = { level3: [] };
+          acc.level2[curr.level2] = { id: curr.level2_id, color: curr.level2_color, level3: {} };
         }
-        acc.level2[curr.level2].level3.push(curr.level3);
-        
+        acc.level2[curr.level2].level3[curr.level3] = { id: curr.level3_id, color: curr.level3_color };
         return acc;
       }, {});
 
