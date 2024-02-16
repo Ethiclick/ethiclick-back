@@ -1,13 +1,12 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-// import HttpExceptionHandler from '@ioc:Adonis/Core/HttpExceptionHandler'
-// import Logger from '@ioc:Adonis/Core/Logger'
-import { rules, schema } from '@ioc:Adonis/Core/Validator'
+import { schema } from '@ioc:Adonis/Core/Validator'
 import CategorieOne from 'App/Models/CategorieOne'
 import CategorieTwo from 'App/Models/CategorieTwo'
 import CategorieThree from 'App/Models/CategorieThree'
+import Database from '@ioc:Adonis/Lucid/Database'
 
 export default class CategoriesController {
-  // TODO: regrouper ces 3 fonction en 1 seul avc un param level & id
+  // TODO: regrouper ces 3 fonction en 1 seul avc un param level
   // TODO: ajouter la récupération de tout les niveaux de catégorie
   /**
    * Retourne les catégories de niveau 1
@@ -37,7 +36,7 @@ export default class CategoriesController {
   public async add({ request, response }: HttpContextContract): Promise<void> {
     try {
 
-      // TODO: Amélioration : compartimenter les levels - regrouper le code répéter
+      // TODO: Amélioration : compartimenter les levels - regrouper le code répété
       const validations = schema.create({
         libelle: schema.string.optional(),
         level: schema.number(),
@@ -157,4 +156,45 @@ export default class CategoriesController {
     }
   }
   
+  public async getAll() {
+    try {
+      // On récupère toutes les catégorie de tout les niveaux avec les jointures
+      const result = await Database
+      .from('categorie_ones')
+      .join('categorie_twos', 'categorie_ones.id', '=', 'categorie_twos.idcat1')
+      .join('categorie_threes', 'categorie_twos.id', '=', 'categorie_threes.idcat2')
+      .select('categorie_ones.*')
+      .select('categorie_twos.libelle AS level2')
+      .select('categorie_threes.libelle AS level3')
+      .groupByRaw("categorie_ones.id, categorie_twos.libelle, categorie_threes.libelle")
+
+
+        // Et on imbrique le résulltats pour avoir un retour propre
+      const results = result.reduce((acc, curr) => {
+        if (!acc.id) {
+          // First iteration
+          acc.id = curr.id;
+          acc.libelle = curr.libelle;
+          acc.color = curr.color;
+          acc.created_at = curr.created_at;
+          acc.updated_at = curr.updated_at;
+          acc.level2 = {};
+        }
+        
+        if (!acc.level2[curr.level2]) {
+          acc.level2[curr.level2] = { level3: [] };
+        }
+        acc.level2[curr.level2].level3.push(curr.level3);
+        
+        return acc;
+      }, {});
+
+      return results;
+
+    } catch (error) {
+       return error.message;
+
+    }
+    
+  }
 }
