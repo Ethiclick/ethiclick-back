@@ -38,6 +38,7 @@ Route.group(() => {
 
 // ** Professionnel
 Route.group(()=> {
+  // TODO: get by categorie
   Route.get('professionnel/:id', 'ProfessionnelsController.getById')
   Route.post('professionnel/update', 'ProfessionnelsController.update')
   Route.get('professionnel/', 'ProfessionnelsController.get')
@@ -46,15 +47,14 @@ Route.group(()=> {
 // ** Categorie
 Route.group(() => {
   // récupérer toutes les catégories
-  Route.get('/categories', 'CategoriesController.getAll')
+  Route.get('/categorie/getAll', 'CategoriesController.getAll')
   // Get by level
-  Route.get('/categorieOne', 'CategoriesController.getCatOne')
-  Route.get('/categorieTwo', 'CategoriesController.getCatTwo')
-  Route.get('/categorieThree', 'CategoriesController.getCatThree')
-  // TODO: get => récupérer toutes les catégories définis dans les différentes tables cat
-  
+  Route.get('/categorie/:level', 'CategoriesController.getCategorie')
   // Ajout/update de categorie selon les paramètres envoyé
-  Route.post('/categorie/add', 'CategoriesController.add')
+  Route.post('/categorie/addOrUpdate', 'CategoriesController.add')
+  // get by id
+  Route.get('/categorie/:id/:level', 'CategoriesController.getById')
+
 })
 
 // *** TEST de connexion redis

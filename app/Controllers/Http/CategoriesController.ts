@@ -4,36 +4,33 @@ import CategorieOne from 'App/Models/CategorieOne'
 import CategorieTwo from 'App/Models/CategorieTwo'
 import CategorieThree from 'App/Models/CategorieThree'
 import Database from '@ioc:Adonis/Lucid/Database'
+import CategorieOnes from '../../../database/migrations/4_1699902493597_categorie_ones';
 
 export default class CategoriesController {
-  // TODO: regrouper ces 3 fonction en 1 seul avc un param level
-  // TODO: ajouter la récupération de tout les niveaux de catégorie
+  // TODO: regrouper les 3 get en 1  fonction en 1 seul avc un param level
   /**
-   * Retourne les catégories de niveau 1
+   * Retourne les catégories selon le niveau
    * @returns {Json} Retourne un json de toutes les occurences trouvé en base
    */
-  public async getCatOne() {
-    const Categorie1 = await CategorieOne.all()
-    return Categorie1
-  }
-  /**
-   * Retourne les catégories de niveau 2
-   * @returns {Json} Retourne un json de toutes les occurences trouvé en base
-   */
-  public async getCatTwo() {
-    const Categorie2 = await CategorieTwo.all()
-    return Categorie2
-  }
-  /**
-   * Retourne les catégories de niveau 3
-   * @returns {Json} Retourne un json de toutes les occurences trouvé en base
-   */
-  public async getCatThree() {
-    const Categorie3 = await CategorieThree.all()
-    return Categorie3
+  public async getCategorie({ params, response }) {
+    try {
+      let Categories;
+      if (params.level == 1) {
+        Categories = await CategorieOne.all()
+      }
+      if (params.level == 2) {
+        Categories = await CategorieTwo.all()
+      }
+      if (params.level == 3) {
+        Categories = await CategorieThree.all()
+      }
+      return Categories
+    } catch (error) {
+      return response.status(500).send({ message: error.message });
+    }
   }
 
-  public async add({ request, response }: HttpContextContract): Promise<void> {
+  public async addOrUpdate({ request, response }: HttpContextContract): Promise<void> {
     try {
 
       // TODO: Amélioration : compartimenter les levels - regrouper le code répété
@@ -191,5 +188,27 @@ export default class CategoriesController {
 
     }
     
+  }
+
+  public async getById({ params, response }) {
+    try {
+      let categorie;
+      if (params.level == 1) {
+        categorie = await CategorieOne.find(params.id);
+      }
+      if (params.level == 2) {
+        categorie = await CategorieTwo.find(params.id);
+      }
+      if (params.level == 3) {
+        categorie = await CategorieThree.find(params.id);
+      }
+      if (!categorie) {
+        return response.status(404).send({ message: 'Catégorie non trouvé' });
+      }
+      
+      return categorie;
+    } catch (error) {
+      return response.status(500).send({ message: error.message });
+    }
   }
 }
