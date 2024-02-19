@@ -12,7 +12,7 @@ export default class CategoriesController {
    * Retourne les catégories selon le niveau
    * @returns {Json} Retourne un json de toutes les occurences trouvé en base
    */
-  public async getCategorie({ params, response }) {
+  public async getByLevel({ params, response }) {
     try {
       let Categories;
       if (params.level == 1) {

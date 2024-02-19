@@ -3,9 +3,26 @@ import Professionnel from "App/Models/Professionnel";
 import { rules, schema } from '@ioc:Adonis/Core/Validator'
 
 export default class ProfessionnelsController {
+  // Regrouper les get => selon le params dispo on renvoie !=
+  // si id on renvoie selon l'identifiant
+  // si on à le level tout les pros de ce level
+  // Sinon on renvoie tout les pros
   public async get () {
     const pro = await Professionnel.all();
     return pro
+  }
+
+  public async getById({ params, response }) {
+    try {
+      const pro = await Professionnel.find(params.id);
+      if (!pro) {
+        return response.status(404).send({ message: 'Professionnel non trouvé' });
+      }
+      
+      return pro;
+    } catch (error) {
+      return response.status(500).send({ message: error.message });
+    }
   }
 
   public async update({ request, response }: HttpContextContract): Promise<void> {
@@ -44,16 +61,4 @@ export default class ProfessionnelsController {
     }
   }
 
-  public async getById({ params, response }) {
-    try {
-      const pro = await Professionnel.find(params.id);
-      if (!pro) {
-        return response.status(404).send({ message: 'Professionnel non trouvé' });
-      }
-      
-      return pro;
-    } catch (error) {
-      return response.status(500).send({ message: error.message });
-    }
-  }
 }

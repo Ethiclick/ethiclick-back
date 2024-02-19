@@ -21,10 +21,6 @@ import Route from '@ioc:Adonis/Core/Route'
 import Redis from '@ioc:Adonis/Addons/Redis'
 import HealthCheck from '@ioc:Adonis/Core/HealthCheck'
 
-Route.get('/', async () => {
-  return { hello: 'world' }
-})
-
 // ** Users
 Route.group(() => {
   // registration logic
@@ -46,14 +42,15 @@ Route.group(()=> {
 
 // ** Categorie
 Route.group(() => {
+  // Regrouper tout les gets
   // récupérer toutes les catégories
   Route.get('/categorie/getAll', 'CategoriesController.getAll')
   // Get by level
-  Route.get('/categorie/:level', 'CategoriesController.getCategorie')
+  Route.get('/categorie/:level', 'CategoriesController.getByLevel')
+  // get by id
+  Route.get('/categorie/:level/:id/', 'CategoriesController.getById')
   // Ajout/update de categorie selon les paramètres envoyé
   Route.post('/categorie/addOrUpdate', 'CategoriesController.add')
-  // get by id
-  Route.get('/categorie/:id/:level', 'CategoriesController.getById')
 
 })
 
