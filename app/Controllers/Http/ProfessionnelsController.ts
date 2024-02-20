@@ -3,10 +3,7 @@ import Professionnel from "App/Models/Professionnel";
 import { rules, schema } from '@ioc:Adonis/Core/Validator'
 
 export default class ProfessionnelsController {
-  // Regrouper les get => selon le params dispo on renvoie !=
-  // si id on renvoie selon l'identifiant
-  // si on à le level tout les pros de ce level
-  // Sinon on renvoie tout les pros
+
   public async get () {
     const pro = await Professionnel.all();
     return pro
@@ -25,6 +22,10 @@ export default class ProfessionnelsController {
     }
   }
 
+  public async getByCat({params, response }) {
+    // TODO: récupérer tout les pros qui on la categories envoyé en paramètres (ajouter level)
+    
+  }
   public async update({ request, response }: HttpContextContract): Promise<void> {
     try {
       let regexUrl = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w\-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/;

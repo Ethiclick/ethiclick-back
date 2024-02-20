@@ -1,30 +1,61 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import { schema } from '@ioc:Adonis/Core/Validator'
-import CategorieOne from 'App/Models/CategorieOne'
-import CategorieTwo from 'App/Models/CategorieTwo'
-import CategorieThree from 'App/Models/CategorieThree'
-import Database from '@ioc:Adonis/Lucid/Database'
-import CategorieOnes from '../../../database/migrations/4_1699902493597_categorie_ones';
+import Categories from 'App/Models/Categories'
 
 export default class CategoriesController {
-  // TODO: regrouper les 3 get en 1  fonction en 1 seul avc un param level
+  public async get({ params, response }) {
+    try {
+      let categorie;
+      let msg;
+      if (params.id) {
+        categorie = await Categories.find(params.id);
+        msg = `Aucune catégorie avec l'identifiant ${params.id}`;
+      } else {
+        categorie = await Categories.all();
+        msg = `Impossible de récupérer les catégories`
+      }
+
+      if (Object.keys(categorie).length === 0) {
+        return response.status(404).send({ message: msg });
+      }
+      
+      return categorie;
+    } catch (error) {
+      return response.status(500).send({ message: error.message });
+    }
+  }
+
   /**
-   * Retourne les catégories selon le niveau
+   * Retourne toutes les categorie selon le niveau
    * @returns {Json} Retourne un json de toutes les occurences trouvé en base
    */
-  public async getByLevel({ params, response }) {
+  public async getByLevel({ params, response })
+  {
     try {
-      let Categories;
-      if (params.level == 1) {
-        Categories = await CategorieOne.all()
+      if (!params.level) {
+        return response.status(404).send({ message: `Veuillez renseigner la categorie` });
       }
-      if (params.level == 2) {
-        Categories = await CategorieTwo.all()
+      let categorie = await Categories.query().where('level', params.level);
+      if (Object.keys(categorie).length === 0) {
+        return response.status(404).send({ message: `Catégorie non trouvé`})
       }
-      if (params.level == 3) {
-        Categories = await CategorieThree.all()
+      return categorie
+    } catch (error) {
+      return response.status(500).send({ message: error.message });
+    }
+  }
+
+  public async getByLibelle({ params, response }) {
+    try {
+      if (!params.libelle) {
+        return response.status(404).send({ message: `Veuillez renseigner la categorie` });
       }
-      return Categories
+      const categorie = await Categories.query().whereRaw('LOWER(libelle) = LOWER(?)', [params.libelle]);
+
+      if (Object.keys(categorie).length === 0) {
+        return response.status(404).send({ message: `Catégorie non trouvé`})
+      }
+      return categorie
     } catch (error) {
       return response.status(500).send({ message: error.message });
     }
@@ -32,11 +63,9 @@ export default class CategoriesController {
 
   public async addOrUpdate({ request, response }: HttpContextContract): Promise<void> {
     try {
-
-      // TODO: Amélioration : compartimenter les levels - regrouper le code répété
       const validations = schema.create({
         libelle: schema.string.optional(),
-        level: schema.number(),
+        level: schema.number.optional(),
         color: schema.string.optional(),
         id: schema.number.optional(),
         id_parent: schema.number.optional(),
@@ -47,168 +76,56 @@ export default class CategoriesController {
       let categorie;
       let msg;
 
-      // Level 1
-      if (data.level == 1) {
-          msg = "mis à jour";
-          if (data.id) {
-            // On check avec l'id si la categorie existe déjà
-            categorie = await CategorieOne.find(data.id)
-          } else if (data.libelle && !categorie) {
-            // On check si le libelle existe déjà
-            categorie = await CategorieOne.query().whereRaw('LOWER(libelle) = LOWER(?)', [data.libelle]).first();
-          }
-          // Sinon c'est une nouvelle catégorie
-          if (!categorie) {
-            categorie = new CategorieOne();
-            msg = "ajouté";
-          }
+      msg = "mis à jour";
+      if (data.id) {
+        // On check avec l'id si la categorie existe déjà
+        categorie = await Categories.find(data.id)
+      } else if (data.libelle && !categorie) {
+          // On check si le libelle existe déjà
+          categorie = await Categories.query().whereRaw('LOWER(libelle) = LOWER(?)', [data.libelle]).first();
       }
 
-      // Level 2
-      if (data.level == 2) {
-        msg = "mis à jour";
-        if (data.id) {
-          // On check avec l'id si la categorie existe déjà
-          categorie = await CategorieTwo.find(data.id)
-        } else if (data.libelle && !categorie) {
-            // On check si le libelle existe déjà
-            categorie = await CategorieTwo.query().whereRaw('LOWER(libelle) = LOWER(?)', [data.libelle]).first();
-        } 
+      // Avant de créer une nouvelle occurence on check si on à bien les infos nécessaire
+      if (!data.id_parent && !data.libelle_parent && data.level !== 1) {
+        return response.status(422).send({ message :"Veuillez renseigner l'identifiant de la catégorie parente ou son libelle"});
+      }
 
-        // Avant de créer une nouvel occurence on check si on à bien les infos nécessaire
-        if (!data.id_parent && !data.libelle_parent) {
-          return response.status(422).send({ message :"Veuillez renseigner l'identifiant de la catégorie parente ou son libelle"});
-        }
-
-
-        let categorieParent;
-        // Ensuite on check que  l'id parent correspondent bien à une categorie qui existe
+      let categorieParent;
+      // Si on est pas en level 1 on vérifie l'existence des levels parents
+      if (data.level !== 1) {
+        // Ensuite on check que  l'id parent correspond bien à une categorie qui existe
         if (data.id_parent) {
-          categorieParent = await CategorieOne.find(data.id_parent);    
+          categorieParent = await Categories.findBy(`id_parent`, data.id_parent);    
         }
+
         // Ou a défaut si le libelle existe
         if (!categorieParent && data.libelle_parent) {
-          categorieParent = await CategorieOne.query().whereRaw('LOWER(libelle) = LOWER(?)', [data.libelle_parent]).first();
+          categorieParent = await Categories.query().whereRaw('LOWER(libelle) = LOWER(?)', [data.libelle_parent]).first();
         }
 
         // Si on à pas trouvé de catégorie parente => erreur
         if (!categorieParent) {
           return response.status(422).send({ message :"Aucune catégorie parente trouvé avec cet identifiant et/ou libellé"});
         }
-        // Sinon c'est une nouvelle catégorie à ajouter
-        if (!categorie) {
-          // return "Création de categorie";
-          categorie = new CategorieTwo();
-          msg = "ajouté";
-        }
-        categorie.idcat1 = categorieParent.id;
+      }
+      // Sinon c'est une nouvelle catégorie à ajouter
+      if (!categorie) {
+        categorie = new Categories();
+        msg = "ajouté";
       }
 
-      // Level 3
-      if (data.level == 3) {
-        msg = "mis à jour";
-        if (data.id) {
-          // On check avec l'id si la categorie existe déjà
-          categorie = await CategorieThree.find(data.id)
-        } else if (data.libelle && !categorie) {
-            // On check si le libelle existe déjà
-            categorie = await CategorieThree.query().whereRaw('LOWER(libelle) = LOWER(?)', [data.libelle]).first();
-        } 
-
-        // Avant de créer une nouvel occurence on check si on à bien les infos nécessaire
-        if (!data.id_parent && !data.libelle_parent) {
-          return response.status(422).send({ message :"Veuillez renseigner l'identifiant de la catégorie parente ou son libelle"});
-        }
-
-        let categorieParent;
-        // Ensuite on check que  l'id parent correspondent bien à une categorie qui existe
-        if (data.id_parent) {
-          categorieParent = await CategorieTwo.find(data.id_parent);    
-        }
-        // Ou a défaut si le libelle existe
-        if (!categorieParent && data.libelle_parent) {
-          categorieParent = await CategorieTwo.query().whereRaw('LOWER(libelle) = LOWER(?)', [data.libelle_parent]).first();
-        }
-
-        // Si on à pas trouvé de catégorie parente => erreur
-        if (!categorieParent) {
-          return response.status(422).send({ message :"Aucune catégorie parente trouvé avec cet identifiant et/ou libellé"});
-        }
-        // Sinon c'est une nouvelle catégorie à ajouter
-        if (!categorie) {
-          categorie = new CategorieThree();
-          msg = "ajouté";
-        }
-        categorie.idcat2 = categorieParent.id;
+      if (data.level !== 1) {
+        categorie.id_parent = categorieParent.id
       }
 
+      categorie.level = data.level
       categorie.libelle = data.libelle;
-      // TODO: si color n'est pas définis generate random, coté front ???
       categorie.color = data.color;
-
       await categorie.save();
+
       return response.status(200).send({ message: `Catégorie ${data.libelle} ${msg} avec succès`});
     } catch (error) {
         return response.status(422).send(error.messages);
-    }
-  }
-  
-  public async getAll() {
-    try {
-      const query = await Database
-        .from('categorie_ones')
-        .join('categorie_twos', 'categorie_ones.id', '=', 'categorie_twos.idcat1')
-        .join('categorie_threes', 'categorie_twos.id', '=', 'categorie_threes.idcat2')
-        .select('categorie_ones.*')
-        .select('categorie_twos.libelle AS level2', 'categorie_twos.color AS level2_color', 'categorie_twos.id AS level2_id')
-        .select('categorie_threes.libelle AS level3', 'categorie_threes.color AS level3_color', 'categorie_threes.id AS level3_id');
-
-
-      const results = query.reduce((acc, curr) => {
-        if (!acc.id) {
-          // Première itérations
-          acc.id = curr.id;
-          acc.libelle = curr.libelle;
-          acc.color = curr.color;
-          acc.created_at = curr.created_at;
-          acc.updated_at = curr.updated_at;
-          acc.level2 = {};
-        }
-        if (!acc.level2[curr.level2]) {
-          acc.level2[curr.level2] = { id: curr.level2_id, color: curr.level2_color, level3: {} };
-        }
-        acc.level2[curr.level2].level3[curr.level3] = { id: curr.level3_id, color: curr.level3_color };
-        return acc;
-      }, {});
-
-      return results;
-
-    } catch (error) {
-       return error.message;
-
-    }
-    
-  }
-
-  public async getById({ params, response }) {
-    try {
-      let categorie;
-      if (params.level == 1) {
-        categorie = await CategorieOne.find(params.id);
-      }
-      if (params.level == 2) {
-        categorie = await CategorieTwo.find(params.id);
-      }
-      if (params.level == 3) {
-        categorie = await CategorieThree.find(params.id);
-      }
-      if (!categorie) {
-        return response.status(404).send({ message: 'Catégorie non trouvé' });
-      }
-      
-      return categorie;
-    } catch (error) {
-      return response.status(500).send({ message: error.message });
     }
   }
 }

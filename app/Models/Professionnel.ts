@@ -1,9 +1,9 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, belongsTo, BelongsTo, hasMany, HasMany } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, column, hasMany, HasMany } from '@ioc:Adonis/Lucid/Orm'
 import User from './User'
-import CategorieOne from './CategorieOne'
-import CategorieTwo from './CategorieTwo'
-import CategorieThree from './CategorieThree'
+import Categories from './Categories'
+// import CategorieTwo from './CategorieTwo'
+// import CategorieThree from './CategorieThree'
 import PriceRange from './PriceRange'
 import Abonnement from './Abonnement'
 
@@ -44,20 +44,20 @@ export default class Professionnel extends BaseModel {
   })
   public id_user: HasMany<typeof User>
 
-  @hasMany(() => CategorieOne, {
-    localKey: 'idcat1',
+  @hasMany(() => Categories, {
+    localKey: 'id_cat',
   })
   public id_cat1: HasMany<typeof CategorieOne>
 
-  @hasMany(() => CategorieTwo, {
-    localKey: 'idcat2',
-  })
-  public id_cat2: HasMany<typeof CategorieTwo>
+  // @hasMany(() => CategorieTwo, {
+  //   localKey: 'idcat2',
+  // })
+  // public id_cat2: HasMany<typeof CategorieTwo>
 
-  @hasMany(() => CategorieThree, {
-    localKey: 'idcat3',
-  })
-  public id_cat3: HasMany<typeof CategorieThree>
+  // @hasMany(() => CategorieThree, {
+  //   localKey: 'idcat3',
+  // })
+  // public id_cat3: HasMany<typeof CategorieThree>
 
   @hasMany(() => PriceRange, {
     localKey: 'idprice',

@@ -25,9 +25,9 @@ export default class Professionnels extends BaseSchema {
 
       // ** Clé étrangères
       table.integer('iduser').references('users.id')
-      table.integer('idcat1').references('categorie_ones.id')
-      table.integer('idcat2').references('categorie_twos.id')
-      table.integer('idcat3').references('categorie_threes.id')
+      table.integer('id_cat').references('categories.id')
+      // table.integer('idcat2').references('categorie_twos.id')
+      // table.integer('idcat3').references('categorie_threes.id')
       table.integer('idprice').references('price_ranges.id')
       table.integer('idabo').references('abonnements.id')
     })
