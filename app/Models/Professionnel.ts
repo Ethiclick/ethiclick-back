@@ -47,7 +47,7 @@ export default class Professionnel extends BaseModel {
   @hasMany(() => Categories, {
     localKey: 'id_cat',
   })
-  public id_cat1: HasMany<typeof CategorieOne>
+  public id_cat: HasMany<typeof Categories>
 
   // @hasMany(() => CategorieTwo, {
   //   localKey: 'idcat2',
