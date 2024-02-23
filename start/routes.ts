@@ -34,27 +34,24 @@ Route.group(() => {
 
 // ** Professionnel
 Route.group(()=> {
-  //  ! A tester
+  // TODO: get by categorie
   Route.get('professionnel/:id', 'ProfessionnelsController.getById')
-  Route.get('professionnel/cat/:id', 'ProfessionnelsController.getByCat')
   Route.post('professionnel/update', 'ProfessionnelsController.update')
   Route.get('professionnel/', 'ProfessionnelsController.get')
 })
 
 // ** Categorie
 Route.group(() => {
-  // TODO: ajouter les validation schema
-  // get by id ou all si id n'est pas renseigné
-  Route.get('/categorie/:id?', 'CategoriesController.get')
+  // Regrouper tout les gets
+  // récupérer toutes les catégories
+  Route.get('/categorie/getAll', 'CategoriesController.getAll')
   // Get by level
-  Route.get('/categorie/level/:level', 'CategoriesController.getByLevel')
-  // Get by libelle
-  Route.get('/categorie/libelle/:libelle', 'CategoriesController.getByLibelle')
-
-
-  // ! En cours
+  Route.get('/categorie/:level', 'CategoriesController.getByLevel')
+  // get by id
+  Route.get('/categorie/:level/:id/', 'CategoriesController.getById')
   // Ajout/update de categorie selon les paramètres envoyé
-  Route.post('/categorie/addUpdate', 'CategoriesController.addOrUpdate')
+  Route.post('/categorie/addOrUpdate', 'CategoriesController.add')
+
 })
 
 // *** TEST de connexion redis

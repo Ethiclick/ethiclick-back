@@ -1,7 +1,7 @@
 import BaseSchema from '@ioc:Adonis/Lucid/Schema'
 
-export default class Categories extends BaseSchema {
-  protected tableName = 'categories'
+export default class CategorieTwos extends BaseSchema {
+  protected tableName = 'categorie_twos'
 
   public async up() {
     this.schema.createTable(this.tableName, (table) => {
@@ -11,13 +11,15 @@ export default class Categories extends BaseSchema {
        */
       table.string('libelle')
       table.string('color')
-      table.integer('level')
-      table.integer('id_parent')
+
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
        */
       table.timestamp('created_at', { useTz: true })
       table.timestamp('updated_at', { useTz: true })
+
+      // ** Clé étrangère
+      table.integer('idcat1').references('categorie_ones.id')
     })
   }
 
