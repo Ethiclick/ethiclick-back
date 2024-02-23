@@ -153,33 +153,53 @@ export default class CategoriesController {
     }
   }
   
-  public async getAll() {
+  public async get() {
     try {
       const query = await Database
         .from('categorie_ones')
-        .join('categorie_twos', 'categorie_ones.id', '=', 'categorie_twos.idcat1')
-        .join('categorie_threes', 'categorie_twos.id', '=', 'categorie_threes.idcat2')
+        .leftJoin('categorie_twos', 'categorie_ones.id', '=', 'categorie_twos.idcat1')
+        .leftJoin('categorie_threes', 'categorie_twos.id', '=', 'categorie_threes.idcat2')
         .select('categorie_ones.*')
         .select('categorie_twos.libelle AS level2', 'categorie_twos.color AS level2_color', 'categorie_twos.id AS level2_id')
         .select('categorie_threes.libelle AS level3', 'categorie_threes.color AS level3_color', 'categorie_threes.id AS level3_id');
 
-
       const results = query.reduce((acc, curr) => {
-        if (!acc.id) {
-          // Première itérations
-          acc.id = curr.id;
-          acc.libelle = curr.libelle;
-          acc.color = curr.color;
-          acc.created_at = curr.created_at;
-          acc.updated_at = curr.updated_at;
-          acc.level2 = {};
+        let existingItem = acc.find(item => item.id === curr.id);
+
+        if (!existingItem) {
+            // Nouvelle entrée pour le niveau 1
+            existingItem = {
+                id: curr.id,
+                libelle: curr.libelle,
+                color: curr.color,
+                created_at: curr.created_at,
+                updated_at: curr.updated_at,
+                level2: null
+            };
+            acc.push(existingItem);
         }
-        if (!acc.level2[curr.level2]) {
-          acc.level2[curr.level2] = { id: curr.level2_id, color: curr.level2_color, level3: {} };
+
+        if (curr.level2) {
+            // Ajouter des données de niveau 2 si elles existent
+            existingItem.level2 = {
+                libelle: curr.level2,
+                color: curr.level2_color,
+                id: curr.level2_id,
+                level3: null
+            };
+
+            if (curr.level3) {
+                // Ajouter des données de niveau 3 si elles existent
+                existingItem.level2.level3 = {
+                    libelle: curr.level3,
+                    color: curr.level3_color,
+                    id: curr.level3_id
+                };
+            }
         }
-        acc.level2[curr.level2].level3[curr.level3] = { id: curr.level3_id, color: curr.level3_color };
+
         return acc;
-      }, {});
+      }, []);
 
       return results;
 

@@ -44,7 +44,7 @@ Route.group(()=> {
 Route.group(() => {
   // Regrouper tout les gets
   // récupérer toutes les catégories
-  Route.get('/categorie/getAll', 'CategoriesController.getAll')
+  Route.get('/categorie/get', 'CategoriesController.get')
   // Get by level
   Route.get('/categorie/:level', 'CategoriesController.getByLevel')
   // get by id
