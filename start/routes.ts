@@ -42,15 +42,14 @@ Route.group(()=> {
 
 // ** Categorie
 Route.group(() => {
-  // Regrouper tout les gets
-  // récupérer toutes les catégories
-  Route.get('/categorie/get', 'CategoriesController.get')
-  // Get by level
-  Route.get('/categorie/:level', 'CategoriesController.getByLevel')
-  // get by id
-  Route.get('/categorie/:level/:id/', 'CategoriesController.getById')
+  // Si pas de params => toutes les catégories
+  // Si level => toute les categorie de ce level
+  // Si level & id => categorie du level indiqué
+  Route.get('/categorie/get/:level?/:id?', 'CategoriesController.get')
+  // Récupérer la categorie avec le libelle
+  Route.get('/categorie/libelle/:libelle', 'CategoriesController.getByLibelle')
   // Ajout/update de categorie selon les paramètres envoyé
-  Route.post('/categorie/addOrUpdate', 'CategoriesController.add')
+  Route.post('/categorie/addOrUpdate', 'CategoriesController.addOrUpdate')
 
 })
 
