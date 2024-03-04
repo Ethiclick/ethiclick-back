@@ -1,5 +1,3 @@
-// import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Users from 'App/Models/User'
 import { rules, schema } from '@ioc:Adonis/Core/Validator'
@@ -17,7 +15,7 @@ export default class UsersController {
         expires_at?: string | undefined
         expires_in?: number | undefined
       }
-    | undefined
+      | undefined
   > {
     const id = params.id
 
@@ -34,7 +32,7 @@ export default class UsersController {
   /**
    * Création d'un utilisateur
    */
-  public async register({ request, response }: HttpContextContract) {
+  public async({ request, response }: HttpContextContract) {
     // validate email
     const validations = schema.create({
       email: schema.string({}, [rules.email(), rules.unique({ table: 'users', column: 'email' })]),
@@ -133,7 +131,7 @@ export default class UsersController {
     }
   }
 
-  public async getFavoris ({ request, response } : HttpContextContract) : Promise<void> {
+  public async getFavoris({ request, response } : HttpContextContract) : Promise<void> {
     try {
       const validations = schema.create({
         id: schema.number()

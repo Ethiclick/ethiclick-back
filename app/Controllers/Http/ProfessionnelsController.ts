@@ -61,4 +61,9 @@ export default class ProfessionnelsController {
     }
   }
 
+  // TODO:
+  // public async getByCat( {}) {
+    
+  // }
 }
+ 
