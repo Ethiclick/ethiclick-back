@@ -4,7 +4,7 @@ import CategorieOne from 'App/Models/CategorieOne'
 import CategorieTwo from 'App/Models/CategorieTwo'
 import CategorieThree from 'App/Models/CategorieThree'
 import Database from '@ioc:Adonis/Lucid/Database'
-// import CategorieOnes from '../../../database/migrations/4_1699902493597_categorie_ones';
+
 
 export default class CategoriesController {
 

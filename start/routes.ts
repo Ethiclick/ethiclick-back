@@ -38,6 +38,7 @@ Route.group(()=> {
   Route.get('professionnel/:id', 'ProfessionnelsController.getById')
   Route.post('professionnel/update', 'ProfessionnelsController.update')
   Route.get('professionnel/', 'ProfessionnelsController.get')
+  Route.get('professionnel/cat/:id/:level?', 'ProfessionnelsController.getByCat')
 })
 
 // ** Categorie

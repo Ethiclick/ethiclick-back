@@ -61,9 +61,25 @@ export default class ProfessionnelsController {
     }
   }
 
-  // TODO:
-  // public async getByCat( {}) {
+  public async getByCat({ params, response }) {
+    try {
+      let field = `idcat1`;
+      // Si on à pas de level on suppose que c'est cat1
+      if (params.level === "2") {
+        field = `idcat2`
+      } else if (params.level === "3") {
+        field = `idcat3`
+      }
+
+      const professionnel = await Professionnel.query().where(field, params.id);
+      if (professionnel.length < 1) {
+        return response.status(404).send({ message: `Aucun professionnel trouvé dans cette catégorie` });
+      }
+      return professionnel;
+    } catch (error) {
+      return response.status(404).send({ message: `Erreur lors de la récupération des professionnels liés à cette catégorie` });
+    }
     
-  // }
+  }
 }
  
