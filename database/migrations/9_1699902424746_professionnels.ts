@@ -9,6 +9,7 @@ export default class Professionnels extends BaseSchema {
       /**
        * Colonne
        */
+      table.string('nom')
       table.string('siret')
       table.string('adresse')
       table.string('city')

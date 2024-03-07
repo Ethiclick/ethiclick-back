@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, belongsTo, BelongsTo, hasMany, HasMany } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, column, hasMany, HasMany } from '@ioc:Adonis/Lucid/Orm'
 import User from './User'
 import CategorieOne from './CategorieOne'
 import CategorieTwo from './CategorieTwo'
@@ -10,6 +10,9 @@ import Abonnement from './Abonnement'
 export default class Professionnel extends BaseModel {
   @column({ isPrimary: true })
   public id: number
+
+  @column()
+  public nom: string
 
   @column()
   public siret: string
