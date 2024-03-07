@@ -2,7 +2,6 @@ import Hash from '@ioc:Adonis/Core/Hash'
 // import { DateTime } from 'luxon'
 import BaseSeeder from '@ioc:Adonis/Lucid/Seeder'
 import User from 'App/Models/User'
-import Role from 'App/Models/Role'
 
 export default class UserSeeder extends BaseSeeder {
   public async run() {

@@ -135,7 +135,7 @@ export default class CategoriesController {
       
       return categorie;
     } catch (error) {
-      return response.status(500).send({ message: error.message });
+      return error.message;
     }
   }
 

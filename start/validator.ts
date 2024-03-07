@@ -9,7 +9,7 @@
 */
 import { validator } from '@ioc:Adonis/Core/Validator'
 
-validator.rule('json', (value, _, options) => {
+validator.rule('json', (value) => {
   try {
     JSON.parse(value)
   } catch (e) {

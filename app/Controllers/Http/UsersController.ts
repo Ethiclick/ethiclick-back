@@ -32,7 +32,7 @@ export default class UsersController {
   /**
    * Création d'un utilisateur
    */
-  public async({ request, response }: HttpContextContract) {
+  public async register({ request, response }: HttpContextContract) {
     // validate email
     const validations = schema.create({
       email: schema.string({}, [rules.email(), rules.unique({ table: 'users', column: 'email' })]),
