@@ -30,29 +30,28 @@ Route.group(() => {
   Route.post('setFavoris', 'UsersController.setFavoris').as('setFavoris')
   Route.post('getFavoris', 'UsersController.getFavoris').as('getFavoris')
   Route.post('logout', 'UsersController.logout').as('logout')
-})
+}).prefix(`/users/`)
 
 // ** Professionnel
 Route.group(()=> {
-  // TODO: get by categorie
-  Route.get('professionnel/:id', 'ProfessionnelsController.getById')
-  Route.post('professionnel/update', 'ProfessionnelsController.update')
-  Route.get('professionnel/', 'ProfessionnelsController.get')
-  Route.get('professionnel/cat/:id/:level?', 'ProfessionnelsController.getByCat')
-})
+  Route.get(':id', 'ProfessionnelsController.getById')
+  Route.post('update', 'ProfessionnelsController.update')
+  Route.get('', 'ProfessionnelsController.get')
+  Route.get('cat/:id/:level?', 'ProfessionnelsController.getByCat')
+}).prefix(`/professionnel/`)
 
 // ** Categorie
 Route.group(() => {
   // Si pas de params => toutes les catégories
   // Si level => toute les categorie de ce level
   // Si level & id => categorie du level indiqué
-  Route.get('/categorie/get/:level?/:id?', 'CategoriesController.get')
+  Route.get('get/:level?/:id?', 'CategoriesController.get')
   // Récupérer la categorie avec le libelle
-  Route.get('/categorie/libelle/:libelle', 'CategoriesController.getByLibelle')
+  Route.get('libelle/:libelle', 'CategoriesController.getByLibelle')
   // Ajout/update de categorie selon les paramètres envoyé
-  Route.post('/categorie/addOrUpdate', 'CategoriesController.addOrUpdate')
+  Route.post('addOrUpdate', 'CategoriesController.addOrUpdate')
 
-})
+}).prefix('/categorie/')
 
 // *** TEST de connexion redis
 Route.get('/test-redis', async ({ response }) => {
