@@ -1,14 +1,18 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, beforeSave, belongsTo, BelongsTo, column, hasMany, HasMany, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
 import Role from 'App/Models/Role'
+import { Hash } from '@adonisjs/core/build/standalone'
 
 export default class Users extends BaseModel {
-  // public static table = 'users';
-  public static connection = 'pg'
 
-  @hasOne(() => Role)
-  public idrole: HasOne<typeof Role>
+  public static readonly connection = 'pg'
 
+  // Clé étrangère
+  @belongsTo( () => Role)
+  public roles: BelongsTo<typeof Role>
+  
+  @column()
+  public idrole: number
   @column({ isPrimary: true })
   public id: number
 

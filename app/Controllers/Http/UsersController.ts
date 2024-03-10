@@ -1,5 +1,6 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Users from 'App/Models/User'
+import Roles from 'App/Models/Role'
 import { rules, schema } from '@ioc:Adonis/Core/Validator'
 import Hash from '@ioc:Adonis/Core/Hash'
 
@@ -37,10 +38,23 @@ export default class UsersController {
     const validations = schema.create({
       email: schema.string({}, [rules.email(), rules.unique({ table: 'users', column: 'email' })]),
       password: schema.string({}, [rules.confirmed()]),
+      username: schema.string.optional(),
+      phone_number: schema.string.optional(),
+      avatar: schema.string.optional(),
+      idrole: schema.number.optional()
     })
 
     const data = await request.validate({ schema: validations })
     data.password = await Hash.make(data.password)
+
+    // ! pour récupérer les user + la clé étrangère role
+    // let users = await Users.find(1); await users.load("idrole");
+    // let users = await Users.query().where("id", 1).preload("idrole");
+
+    if (!data.idrole) {
+      data.idrole = 3
+    }
+    // return data;
     const user = await Users.create(data)
     return response.created(user)
     // TODO: adaptation a faire: ajout d'un try/catch pour retourner un boolean plutot que le user
