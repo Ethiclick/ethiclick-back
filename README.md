@@ -5,6 +5,7 @@ https://docs.adonisjs.com/guides/installation
 # Run le server, watch permet de restart le server lorsqu'un changement est détecté
 
 node ace serve --watch
+node ace serve --watch --node-args="--inspect"
 
 # Le serveur tourne alors en local à cette adresse
 

@@ -1,34 +1,9 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Users from 'App/Models/User'
-import Roles from 'App/Models/Role'
 import { rules, schema } from '@ioc:Adonis/Core/Validator'
 import Hash from '@ioc:Adonis/Core/Hash'
 
 export default class UsersController {
-  /**
-   * getToken
-   * @returns {Object} Token d'authentification à partir d'un identifiant
-   */
-  public async getToken({ params, auth }: HttpContextContract): Promise<
-    | {
-        type: 'bearer'
-        token: string
-        expires_at?: string | undefined
-        expires_in?: number | undefined
-      }
-      | undefined
-  > {
-    const id = params.id
-
-    const user = await Users.query().where('id', id).firstOrFail()
-
-    try {
-      const token = await auth.use('api').generate(user)
-      return token.toJSON()
-    } catch (error) {
-      console.log(error)
-    }
-  }
 
   /**
    * Création d'un utilisateur
@@ -74,9 +49,9 @@ export default class UsersController {
     const email = request.input('email')
     const password = request.input('password')
 
+
     try {
       const token = await auth.use('api').attempt(email, password)
-
       return token.toJSON()
     } catch (error) {
       console.error(error.message)
@@ -92,7 +67,6 @@ export default class UsersController {
    */
   public async update({ request, response }: HttpContextContract): Promise<void> {
     try {
-      // TODO: ajouter vérif si des champs sont vide return erreur user friendly
       // validation des champs
       const validations = schema.create({
         password: schema.string({}, [rules.confirmed()]),
@@ -117,7 +91,7 @@ export default class UsersController {
 
       return response.status(200).send({ message: 'Utilisateur mis à jour avec succès' })
     } catch (error) {
-      return response.status(422).send(error.messages)
+      return response.status(422).send({ message: error.messages })
     }
   }
 
@@ -130,13 +104,10 @@ export default class UsersController {
       })
       // Validation des données de la requête
       const data = await request.validate({ schema: validations })
-
       // Récupération de l'utilisateur authentifié
       const user = await Users.findOrFail(data.id)
-
       // Mettre à jour
       user.favoris = data.favoris
-
       await user.save()
 
       return response.status(200).send({ message: 'Favoris mis à jour avec succès' })
@@ -152,10 +123,9 @@ export default class UsersController {
       })
 
       const data = await request.validate({ schema : validations });
-
       const user = await Users.findOrFail(data.id);
-
       return response.status(200).send({ favoris: user.favoris });
+      
     } catch (error) {
       return response.status(400).send({ message: "Erreur lors de la récupération des favoris" })
     }
