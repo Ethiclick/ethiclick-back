@@ -1,4 +1,3 @@
-import Hash from '@ioc:Adonis/Core/Hash'
 import BaseSeeder from '@ioc:Adonis/Lucid/Seeder'
 import User from 'App/Models/User'
 
@@ -8,22 +7,9 @@ export default class UserSeeder extends BaseSeeder {
     await User.createMany([
       {
         idrole: 1,
-        email: 'admin@admin.fr',
-        password: 'admin',
+        email: 'contact@ethiclick.fr',
         username: 'Admin',
-      },
-      {
-        idrole: 2,
-        email: 'pro@pro.fr',
-        password: 'pro',
-        username: 'Professionnel',
-      },
-      {
-        idrole: 3,
-        email: 'client@client.fr',
-        password: 'client',
-        username: 'Client',
-      },
+      }
     ])
   }
 }
