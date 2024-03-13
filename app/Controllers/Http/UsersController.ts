@@ -20,7 +20,6 @@ export default class UsersController {
     })
 
     const data = await request.validate({ schema: validations })
-    data.password = await Hash.make(data.password)
 
     // ! pour récupérer les user + la clé étrangère role
     // let users = await Users.find(1); await users.load("idrole");
@@ -56,7 +55,7 @@ export default class UsersController {
     } catch (error) {
       console.error(error.message)
       return response.unauthorized({
-        errors: [{ message: 'Identifiant incorrect.' }],
+        errors: [{ message: 'Identifiant ou mot de passe incorrect.' }],
       })
     }
   }
@@ -83,7 +82,6 @@ export default class UsersController {
 
       // Mettre à jour
       user.username = data.username
-      user.password = await Hash.make(data.password)
       user.phone_number = data.phone_number
       user.avatar = data.avatar
 
