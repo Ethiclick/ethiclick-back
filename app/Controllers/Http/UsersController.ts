@@ -75,11 +75,10 @@ export default class UsersController {
         avatar: schema.string({}),
       })
       // Validation des données de la requête
-      const data = await request.validate({ schema: validations })
+      const data = await request.validate({ schema: validations });
 
       // Récupération de l'utilisateur authentifié
-      const user = await Users.findOrFail(data.id)
-
+      const user = await Users.findOrFail(data.id);
       // Mettre à jour
       user.username = data.username
       user.phone_number = data.phone_number
@@ -89,7 +88,8 @@ export default class UsersController {
 
       return response.status(200).send({ message: 'Utilisateur mis à jour avec succès' })
     } catch (error) {
-      return response.status(422).send({ message: error.messages })
+      // return error
+      return response.status(422).send({ message: error.message })
     }
   }
 
