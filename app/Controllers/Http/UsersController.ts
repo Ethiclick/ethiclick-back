@@ -61,13 +61,14 @@ export default class UsersController {
 
   /**
    * update
-   * Met à jour les champs: usernmae, password, phone_number & avatar
+   * Met à jour les champs: username, phone_number & avatar
+   * Pour la modificaiton du mdp => autre circuit 
+   * Pas de modification du mail !
    */
   public async update({ request, response }: HttpContextContract): Promise<void> {
     try {
       // validation des champs
       const validations = schema.create({
-        password: schema.string({}, [rules.confirmed()]),
         id: schema.number(),
         username: schema.string(),
         phone_number: schema.string({}, [rules.maxLength(12), rules.minLength(10)]),
