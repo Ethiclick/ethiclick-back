@@ -7,18 +7,26 @@ import Database from '@ioc:Adonis/Lucid/Database'
 
 export default class CategoriesController {
 
+  /**
+   * Récupération des catégories
+   * avec le level => toutes les cat de ce niveau
+   * avec level + id => la catégorie ciblé
+   * sans rien => toutes les catégories imbriqué
+   * @param {any} params
+   * @param {any} response
+   * @returns {Array}   Tableau contenant un json de toutes les catégories
+   */
   public async get({ params, response }) {
     try {
       let results;
       // Si on à que le level on renvoie toutes les cat d'un niveau
       if (params.level && !params.id) {
-        results = await this.getByLevel(params.level, response);
+        results = await this.getByLevel(params.level);
         // Si on à pas un obj c'est un msg d'erreur
         if (typeof results !== "object") {
           return response.status(422).send({ message : results });
         }
       } else if (params.level && params.id) {
-
         results = await this.getById(params.level, params.id);
         // Si on à pas un obj c'est un msg d'erreur
         if (typeof results !== "object") {
@@ -81,10 +89,11 @@ export default class CategoriesController {
   }
 
   /**
-   * Retourne les catégories selon le niveau
+   * Retourne les catégories selon le niveau demandé
+   * @param {Int} level
    * @returns {string|Object} Retourne un json de toutes les occurences trouvé en base
    */
-  public async getByLevel(level, response) {
+  public async getByLevel(level) {
     try {
 
       if (isNaN(level)) {
@@ -103,10 +112,16 @@ export default class CategoriesController {
       }
       return Categories
     } catch (error) {
-      return response.status(422).send({ message : error.messages });
+      return error.message;
     }
   }
 
+  /**
+   * Récupère une catégorie avec son identidiant si on à le niveau d'imbrication
+   * @param {Int} level
+   * @param {Int} id
+   * @returns {Object|String}   Object categorie en cas de succès, sinon message d'erreur
+   */
   public async getById(level, id) {
     try {
 
@@ -138,9 +153,16 @@ export default class CategoriesController {
     }
   }
 
+  /**
+   * Récupération de la catégorie avec son libellé
+   * on va chercher dans tout les niveau d'imbrication
+   * @param {any} params
+   * @param {any} response
+   * @returns {Object}
+   */
   public async getByLibelle ({params, response }) {
 
-    // Gérer le cas où le paramètre libelle est manquant ou n'est pas une chaîne valide
+    // Gérer le cas où le paramètre libelle est manquant ou contient des chiffres
     if (!params.libelle || /\d/.test(params.libelle)) {
       return response.status(400).send({ message : `Le libelle est invalide : ${params.libelle}` });
     }
@@ -166,8 +188,9 @@ export default class CategoriesController {
    * Insert or update de la categorie
    * Nécessite à minima le niveau d'imbrication de la categorie
    * Si id on récupère avec sinon on essaie avec le libelle
+   * valable pour tout les niveaux + récupération de la categorie parente
    * @param {any} request
-   * @param {HttpContextContract} response
+   * @param {any} response
    * @returns {Object}  Message d'erreur ou de succès
    */
   public async addOrUpdate({ request, response }: HttpContextContract): Promise<void> {
