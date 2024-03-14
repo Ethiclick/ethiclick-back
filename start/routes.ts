@@ -21,7 +21,6 @@ import Route from '@ioc:Adonis/Core/Route'
 import Redis from '@ioc:Adonis/Addons/Redis'
 import HealthCheck from '@ioc:Adonis/Core/HealthCheck'
 
-// ** Users
 Route.group(() => {
   // registration logic
   Route.post('register', 'UsersController.register').as('register')
@@ -32,7 +31,6 @@ Route.group(() => {
   Route.post('logout', 'UsersController.logout').as('logout')
 }).prefix(`/users/`)
 
-// ** Professionnel
 Route.group(()=> {
   Route.get(':id', 'ProfessionnelsController.getById')
   Route.post('update', 'ProfessionnelsController.update')
@@ -40,7 +38,6 @@ Route.group(()=> {
   Route.get('cat/:id/:level?', 'ProfessionnelsController.getByCat')
 }).prefix(`/professionnel/`)
 
-// ** Categorie
 Route.group(() => {
   // Si pas de params => toutes les catégories
   // Si level => toute les categorie de ce level

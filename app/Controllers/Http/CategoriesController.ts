@@ -5,7 +5,6 @@ import CategorieTwo from 'App/Models/CategorieTwo'
 import CategorieThree from 'App/Models/CategorieThree'
 import Database from '@ioc:Adonis/Lucid/Database'
 
-
 export default class CategoriesController {
 
   public async get({ params, response }) {
@@ -163,10 +162,18 @@ export default class CategoriesController {
     return categorie;
   }
 
+  /**
+   * Insert or update de la categorie
+   * Nécessite à minima le niveau d'imbrication de la categorie
+   * Si id on récupère avec sinon on essaie avec le libelle
+   * @param {any} request
+   * @param {HttpContextContract} response
+   * @returns {Object}  Message d'erreur ou de succès
+   */
   public async addOrUpdate({ request, response }: HttpContextContract): Promise<void> {
     try {
 
-      // TODO: Amélioration : compartimenter les levels - regrouper le code répété
+      // TODO: Amélioration : compartimenter les levels dans des fonctions - regrouper le code répété
       const validations = schema.create({
         libelle: schema.string.optional(),
         level: schema.number.optional(),
@@ -177,11 +184,16 @@ export default class CategoriesController {
       })
   
       const data = await request.validate({ schema: validations });
+
+      if (!data.level) {
+        return response.status(422).send({ message: `Veuillez renseigner le niveau d'imbrication de la catégorie recherché`});
+      }
+
       let categorie;
       let msg;
 
       // Level 1
-      if ( (data.level && data.level == 1) || (data.id && !data.level) ) {
+      if ((data.level && data.level == 1) || (data.id && !data.level)) {
           msg = "mis à jour";
           if (data.id) {
             // On check avec l'id si la categorie existe déjà
@@ -197,6 +209,7 @@ export default class CategoriesController {
           }
       }
 
+      // TODO: regrouper à minima les niveaux 2 & trois
       // Level 2
       if (data.level == 2) {
         msg = "mis à jour";
