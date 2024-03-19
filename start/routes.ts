@@ -35,7 +35,7 @@ Route.group(()=> {
   Route.get(':id', 'ProfessionnelsController.getById')
   Route.post('update', 'ProfessionnelsController.update')
   Route.get('', 'ProfessionnelsController.get')
-  Route.get('cat/:id/:level?', 'ProfessionnelsController.getByCat')
+  Route.get('cat/:idcat/:level?', 'ProfessionnelsController.getByCat')
 }).prefix(`/professionnel/`)
 
 Route.group(() => {
