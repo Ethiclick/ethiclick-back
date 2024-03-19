@@ -19,19 +19,28 @@ export default class UsersController {
     })
 
     const data = await request.validate({ schema: validations })
-
-    // ! pour récupérer les user + la clé étrangère role
-    // let users = await Users.find(1); await users.load("idrole");
-    // let users = await Users.query().where("id", 1).preload("idrole");
-
     if (!data.idrole) {
       data.idrole = 3
     }
-    // return data;
+    // ! pour récupérer les user + la clé étrangère role
+    // let users = await Users.find(1); await users.load("idrole");
+    // let users = await Users.query().where("id", 1).preload("idrole");
+    
     const user = await Users.create(data)
+
+    // Role 1: Admin |  2: pro |  3: Cleint
+    if (data.idrole === 2) {
+      // TODO: insertion d'un pro
+    }
+    if (data.idrole === 3) {
+      // TODO: insertion d'un client
+    }
+
+    // ! Return le user pro ou client complet (user + pro ou user+client) sans le mdppppp ofc!!!!
     return response.created(user)
-    // TODO: adaptation a faire: ajout d'un try/catch pour retourner un boolean plutot que le user
-    // TODO: Ajout d'une etape si on s'enregistre en tant que professionnel ou client => ajout dans les tables correspondantes + formulaire différent (pour les client on affiche et on permet de passer sans remplir tout le formulaire, pour les pros par contre obligation de remplir tout les champs)
+
+    // TODO: formulaire différent (pour les client on affiche et on permet de passer sans remplir tout le formulaire
+    // TODO: pour les pros par contre obligation de remplir tout les champs)
   }
 
   /**
