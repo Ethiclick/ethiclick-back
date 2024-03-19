@@ -3,7 +3,7 @@ import Professionnel from "App/Models/Professionnel";
 import { rules, schema } from '@ioc:Adonis/Core/Validator'
 
 export default class ProfessionnelsController {
-  // Regrouper les get => selon le params dispo on renvoie !=
+  // TODO: Regrouper les get => selon le params dispo on renvoie !=
   // si id on renvoie selon l'identifiant
   // si on à le level tout les pros de ce level
   // Sinon on renvoie tout les pros
@@ -13,6 +13,10 @@ export default class ProfessionnelsController {
     return pro
   }
 
+  /**
+   * Récupération des informations d'un professionnel avec son identifiant
+   * @returns {String} Json contenant les infos, sinon un message d'erreur
+   */
   public async getById({ params, response }) {
     try {
       const pro = await Professionnel.find(params.id);
@@ -26,6 +30,11 @@ export default class ProfessionnelsController {
     }
   }
 
+  /**
+   * Mise à jour des informations d'un professionnel
+   * except: siret, idcat, abo, price, iduser
+   * @returns {String} Json contenant le message de succès ou l'erreur 
+   */
   public async update({ request, response }: HttpContextContract): Promise<void> {
     try {
       let regexUrl = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w\-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/;
@@ -67,9 +76,19 @@ export default class ProfessionnelsController {
     }
   }
 
+  /**
+   * Récupère les professionnels appartenant à une catégorie
+   * @param {Object} params
+   * @param {String}   params.idcat   Identifiant de la catégorie recherché
+   * @param {String}   params.level   Niveau d'imbrication de la catégorie, par défault level 1
+   * @returns {any}
+   */
   public async getByCat({ params, response }) {
     try {
       let field = `idcat1`;
+      if (!params.idcat) {
+        return response.status(404).send({ message: `Veuillez renseigner l'identifiant de la catégorie recherché` });
+      }
       // Si on à pas de level on suppose que c'est cat1
       if (params.level === "2") {
         field = `idcat2`
@@ -77,7 +96,7 @@ export default class ProfessionnelsController {
         field = `idcat3`
       }
 
-      const professionnel = await Professionnel.query().where(field, params.id);
+      const professionnel = await Professionnel.query().where(field, params.idcat);
       if (professionnel.length < 1) {
         return response.status(404).send({ message: `Aucun professionnel trouvé dans cette catégorie` });
       }
