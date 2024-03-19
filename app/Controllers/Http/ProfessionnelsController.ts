@@ -38,13 +38,14 @@ export default class ProfessionnelsController {
         website: schema.string.optional([rules.regex(regexUrl)]),
         acc_card: schema.boolean.optional(),
         photos: schema.string.optional(),
+        nom: schema.string.optional()
       })
 
       // Validation des données de la requête
       const data = await request.validate({ schema: validations })
 
       if (!data.id) {
-        return response.status(400).send({ message: 'Veuillez renseigner l\'idenfitiant de l\'utilisateur pour le mettre à jour' });
+        return response.status(400).send({ message: 'Veuillez renseigner l\'identifiant de l\'utilisateur pour le mettre à jour' });
       }
       // Récupération de l'utilisateur à modifier
       const pro = await Professionnel.findOrFail(data.id)
@@ -56,6 +57,7 @@ export default class ProfessionnelsController {
       if (data.website) pro.website = data.website;
       if (data.acc_card) pro.acc_card = data.acc_card
       if (data.photos) pro.photos = data.photos
+      if (data.nom) pro.nom = data.nom
 
       await pro.save()
 
