@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, hasMany, HasMany } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, column, hasMany, HasMany, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
 import User from './User'
 import CategorieOne from './CategorieOne'
 import CategorieTwo from './CategorieTwo'
@@ -42,11 +42,17 @@ export default class Professionnel extends BaseModel {
   public updatedAt: DateTime
 
   // ** Clé étrangère
-  @hasMany(() => User, {
-    localKey: 'iduser',
+  @column()
+  public iduser: number
+  @hasOne(() => User, {
+    foreignKey: 'id', // id column on "CategorieOne" model
   })
-  public id_user: HasMany<typeof User>
+  public profile: HasOne<typeof User>
 
+
+
+
+  // ---------------------------------
   @hasMany(() => CategorieOne, {
     localKey: 'idcat1',
   })

@@ -1,6 +1,8 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Users from 'App/Models/User'
 import { rules, schema } from '@ioc:Adonis/Core/Validator'
+import ProfessionnelsController from './ProfessionnelsController'
+import ClientsController from './ClientsController'
 
 export default class UsersController {
 
@@ -28,12 +30,18 @@ export default class UsersController {
     
     const user = await Users.create(data)
 
-    // Role 1: Admin |  2: pro |  3: Cleint
+    // Role 1: Admin |  2: pro |  3: Client
     if (data.idrole === 2) {
-      // TODO: insertion d'un pro
+      // insertion d'un pro
+      const proModel = new ProfessionnelsController();
+      const pro = await proModel.insert(request, user.id);
+      return {pro,  user};
     }
     if (data.idrole === 3) {
       // TODO: insertion d'un client
+      const clientModel = new ClientsController();
+      const client = await clientModel.insert(request, user.id);
+      return {client,  user};
     }
 
     // ! Return le user pro ou client complet (user + pro ou user+client) sans le mdppppp ofc!!!!

@@ -14,9 +14,26 @@ export default class ProfessionnelsController {
   }
 
   /**
-   * Récupération des informations d'un professionnel avec son identifiant
-   * @returns {String} Json contenant les infos, sinon un message d'erreur
+   * Insertion d'un pro depuis userController
+   * @returns {Professionnel} Retourne une instance d'un pro
    */
+  public async insert(request, iduser) {
+    const validations = schema.create({
+      nom: schema.string.optional(),
+      siret: schema.string.optional(),
+      adresse: schema.string.optional(),
+      city: schema.string.optional(),
+      postal_code: schema.number.optional(),
+      website: schema.string.optional(),
+      acc_card: schema.boolean.optional(),
+      photos: schema.string.optional(),
+    });
+    const data = await request.validate({ schema: validations });
+    data.iduser = iduser;
+    const pro = await Professionnel.create(data);
+    return pro;
+  }
+
   public async getById({ params, response }) {
     try {
       const pro = await Professionnel.find(params.id);

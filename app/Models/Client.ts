@@ -1,5 +1,6 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, column , HasOne, hasOne} from '@ioc:Adonis/Lucid/Orm'
+import User from './User'
 
 export default class Client extends BaseModel {
   @column({ isPrimary: true })
@@ -21,5 +22,10 @@ export default class Client extends BaseModel {
   public updatedAt: DateTime
 
   // ! Clé étrangère
-  // id_user
+  @column()
+  public iduser: number
+  @hasOne(() => User, {
+    foreignKey: 'id', // id column on "CategorieOne" model
+  })
+  public profile: HasOne<typeof User>
 }
