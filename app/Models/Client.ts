@@ -25,7 +25,7 @@ export default class Client extends BaseModel {
   @column()
   public iduser: number
   @hasOne(() => User, {
-    foreignKey: 'id', // id column on "CategorieOne" model
+    foreignKey: 'id', // id column on "User" model
   })
   public profile: HasOne<typeof User>
 }

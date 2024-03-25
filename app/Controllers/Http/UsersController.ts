@@ -10,7 +10,6 @@ export default class UsersController {
    * Création d'un utilisateur
    */
   public async register({ request, response }: HttpContextContract) {
-    // validate email
     const validations = schema.create({
       email: schema.string({}, [rules.email(), rules.unique({ table: 'users', column: 'email' })]),
       password: schema.string({}, [rules.confirmed()]),
@@ -23,11 +22,7 @@ export default class UsersController {
     const data = await request.validate({ schema: validations })
     if (!data.idrole) {
       data.idrole = 3
-    }
-    // ! pour récupérer les user + la clé étrangère role
-    // let users = await Users.find(1); await users.load("idrole");
-    // let users = await Users.query().where("id", 1).preload("idrole");
-    
+    }  
     const user = await Users.create(data)
 
     // Role 1: Admin |  2: pro |  3: Client
@@ -43,12 +38,7 @@ export default class UsersController {
       const client = await clientModel.insert(request, user.id);
       return {client,  user};
     }
-
-    // ! Return le user pro ou client complet (user + pro ou user+client) sans le mdppppp ofc!!!!
     return response.created(user)
-
-    // TODO: formulaire différent (pour les client on affiche et on permet de passer sans remplir tout le formulaire
-    // TODO: pour les pros par contre obligation de remplir tout les champs)
   }
 
   /**
