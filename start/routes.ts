@@ -31,7 +31,7 @@ Route.group(() => {
   Route.post('logout', 'UsersController.logout').as('logout')
 }).prefix(`/users/`)
 
-Route.group(()=> {
+Route.group(() => {
   Route.get(':id', 'ProfessionnelsController.getById')
   Route.post('update', 'ProfessionnelsController.update')
   Route.get('', 'ProfessionnelsController.get')
@@ -47,7 +47,6 @@ Route.group(() => {
   Route.get('libelle/:libelle', 'CategoriesController.getByLibelle')
   // Ajout/update de categorie selon les paramètres envoyé
   Route.post('addOrUpdate', 'CategoriesController.addOrUpdate')
-
 }).prefix('/categorie/')
 
 // *** TEST de connexion redis

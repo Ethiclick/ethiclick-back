@@ -31,7 +31,4 @@ export default class CategorieTwo extends BaseModel {
   // id de cat2 est la clé étrangère de categorieThree
   @hasMany(() => CategorieThree)
   public categorieId: HasMany<typeof CategorieThree>
-
-
-  
 }

@@ -13,7 +13,7 @@ validator.rule('json', (value) => {
   try {
     JSON.parse(value)
   } catch (e) {
-        console.error('Invalid JSON format:', e.message);
-        throw new Error("Invalid JSON format");
+    console.error('Invalid JSON format:', e.message)
+    throw new Error('Invalid JSON format')
   }
 })

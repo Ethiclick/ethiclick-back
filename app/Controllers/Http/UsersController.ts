@@ -5,7 +5,6 @@ import ProfessionnelsController from './ProfessionnelsController'
 import ClientsController from './ClientsController'
 
 export default class UsersController {
-
   /**
    * Création d'un utilisateur
    */
@@ -16,27 +15,27 @@ export default class UsersController {
       username: schema.string.optional(),
       phone_number: schema.string.optional(),
       avatar: schema.string.optional(),
-      idrole: schema.number.optional()
+      idrole: schema.number.optional(),
     })
 
     const data = await request.validate({ schema: validations })
     if (!data.idrole) {
       data.idrole = 3
-    }  
+    }
     const user = await Users.create(data)
 
     // Role 1: Admin |  2: pro |  3: Client
     if (data.idrole === 2) {
       // insertion d'un pro
-      const proModel = new ProfessionnelsController();
-      const pro = await proModel.insert(request, user.id);
-      return {pro,  user};
+      const proModel = new ProfessionnelsController()
+      const pro = await proModel.insert(request, user.id)
+      return { pro, user }
     }
     if (data.idrole === 3) {
       // TODO: insertion d'un client
-      const clientModel = new ClientsController();
-      const client = await clientModel.insert(request, user.id);
-      return {client,  user};
+      const clientModel = new ClientsController()
+      const client = await clientModel.insert(request, user.id)
+      return { client, user }
     }
     return response.created(user)
   }
@@ -54,7 +53,6 @@ export default class UsersController {
     const email = request.input('email')
     const password = request.input('password')
 
-
     try {
       const token = await auth.use('api').attempt(email, password)
       return token.toJSON()
@@ -69,7 +67,7 @@ export default class UsersController {
   /**
    * update
    * Met à jour les champs: username, phone_number & avatar
-   * Pour la modificaiton du mdp => autre circuit 
+   * Pour la modificaiton du mdp => autre circuit
    * Pas de modification du mail !
    */
   public async update({ request, response }: HttpContextContract): Promise<void> {
@@ -82,10 +80,10 @@ export default class UsersController {
         avatar: schema.string({}),
       })
       // Validation des données de la requête
-      const data = await request.validate({ schema: validations });
+      const data = await request.validate({ schema: validations })
 
       // Récupération de l'utilisateur authentifié
-      const user = await Users.findOrFail(data.id);
+      const user = await Users.findOrFail(data.id)
       // Mettre à jour
       user.username = data.username
       user.phone_number = data.phone_number
@@ -100,7 +98,7 @@ export default class UsersController {
     }
   }
 
-  public async setFavoris({ request, response }: HttpContextContract) : Promise<void> {
+  public async setFavoris({ request, response }: HttpContextContract): Promise<void> {
     try {
       // validation des champs
       const validations = schema.create({
@@ -121,18 +119,17 @@ export default class UsersController {
     }
   }
 
-  public async getFavoris({ request, response } : HttpContextContract) : Promise<void> {
+  public async getFavoris({ request, response }: HttpContextContract): Promise<void> {
     try {
       const validations = schema.create({
-        id: schema.number()
+        id: schema.number(),
       })
 
-      const data = await request.validate({ schema : validations });
-      const user = await Users.findOrFail(data.id);
-      return response.status(200).send({ favoris: user.favoris });
-      
+      const data = await request.validate({ schema: validations })
+      const user = await Users.findOrFail(data.id)
+      return response.status(200).send({ favoris: user.favoris })
     } catch (error) {
-      return response.status(400).send({ message: "Erreur lors de la récupération des favoris" })
+      return response.status(400).send({ message: 'Erreur lors de la récupération des favoris' })
     }
   }
   // logout function

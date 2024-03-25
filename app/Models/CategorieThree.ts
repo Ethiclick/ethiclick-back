@@ -3,7 +3,6 @@ import { BaseModel, column, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
 import CategorieTwo from './CategorieTwo'
 
 export default class CategorieThree extends BaseModel {
-
   @column({ isPrimary: true })
   public id: number
 

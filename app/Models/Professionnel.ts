@@ -49,7 +49,6 @@ export default class Professionnel extends BaseModel {
   })
   public profile: HasOne<typeof User>
 
-
   // ---------------------------------
   @hasMany(() => CategorieOne, {
     localKey: 'idcat1',

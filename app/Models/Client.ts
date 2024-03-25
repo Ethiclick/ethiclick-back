@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column , HasOne, hasOne} from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, column, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
 import User from './User'
 
 export default class Client extends BaseModel {

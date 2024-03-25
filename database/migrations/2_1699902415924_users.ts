@@ -24,11 +24,7 @@ export default class Users extends BaseSchema {
       table.timestamp('updated_at', { useTz: true })
 
       // * Clé étrangère
-      table
-      .integer('idrole')
-      .unsigned()
-      .references('roles.id')
-      .onDelete('CASCADE')
+      table.integer('idrole').unsigned().references('roles.id').onDelete('CASCADE')
 
       table.index(['id', 'email'])
     })

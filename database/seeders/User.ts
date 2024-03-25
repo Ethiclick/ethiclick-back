@@ -9,7 +9,7 @@ export default class UserSeeder extends BaseSeeder {
         idrole: 1,
         email: 'contact@ethiclick.fr',
         username: 'Admin',
-      }
+      },
     ])
   }
 }
