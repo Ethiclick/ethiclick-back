@@ -71,11 +71,9 @@ export default class ProfessionnelsController {
       const data = await request.validate({ schema: validations })
 
       if (!data.id) {
-        return response
-          .status(400)
-          .send({
-            message: "Veuillez renseigner l'identifiant de l'utilisateur pour le mettre à jour",
-          })
+        return response.status(400).send({
+          message: "Veuillez renseigner l'identifiant de l'utilisateur pour le mettre à jour",
+        })
       }
       // Récupération de l'utilisateur à modifier
       const pro = await Professionnel.findOrFail(data.id)
@@ -127,11 +125,9 @@ export default class ProfessionnelsController {
       }
       return professionnel
     } catch (error) {
-      return response
-        .status(404)
-        .send({
-          message: `Erreur lors de la récupération des professionnels liés à cette catégorie`,
-        })
+      return response.status(404).send({
+        message: `Erreur lors de la récupération des professionnels liés à cette catégorie`,
+      })
     }
   }
 }

@@ -218,11 +218,9 @@ export default class CategoriesController {
       const data = await request.validate({ schema: validations })
 
       if (!data.level) {
-        return response
-          .status(422)
-          .send({
-            message: `Veuillez renseigner le niveau d'imbrication de la catégorie recherché`,
-          })
+        return response.status(422).send({
+          message: `Veuillez renseigner le niveau d'imbrication de la catégorie recherché`,
+        })
       }
 
       let categorie
@@ -263,11 +261,9 @@ export default class CategoriesController {
 
         // Avant de créer une nouvel occurence on check si on à bien les infos nécessaire
         if (!data.id_parent && !data.libelle_parent) {
-          return response
-            .status(422)
-            .send({
-              message: "Veuillez renseigner l'identifiant de la catégorie parente ou son libelle",
-            })
+          return response.status(422).send({
+            message: "Veuillez renseigner l'identifiant de la catégorie parente ou son libelle",
+          })
         }
 
         let categorieParent
@@ -312,11 +308,9 @@ export default class CategoriesController {
 
         // Avant de créer une nouvel occurence on check si on à bien les infos nécessaire
         if (!data.id_parent && !data.libelle_parent) {
-          return response
-            .status(422)
-            .send({
-              message: "Veuillez renseigner l'identifiant de la catégorie parente ou son libelle",
-            })
+          return response.status(422).send({
+            message: "Veuillez renseigner l'identifiant de la catégorie parente ou son libelle",
+          })
         }
 
         let categorieParent

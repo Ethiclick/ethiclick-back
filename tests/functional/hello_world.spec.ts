@@ -1,9 +1,7 @@
 import { test } from '@japa/runner'
 
-
-test("say test", async () => {
-  console.log("test");
-
+test('say test', async () => {
+  console.log('test')
 })
 
 // test('display welcome page', async ({ client }) => {
