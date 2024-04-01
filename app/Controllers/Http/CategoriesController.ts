@@ -106,7 +106,7 @@ export default class CategoriesController {
 
       let Categories
       if (level == 1) {
-        Categories = await CategorieOne.all()
+        Categories = await Database.from("categorie_ones").orderBy("id");
       }
       if (level == 2) {
         Categories = await CategorieTwo.all()
