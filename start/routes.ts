@@ -25,6 +25,7 @@ Route.group(() => {
   // registration logic
   Route.post('register', 'UsersController.register').as('register')
   Route.post('login', 'UsersController.login').as('login')
+  Route.get('get', 'UsersController.get').as('get').middleware('auth')
   Route.post('update', 'UsersController.update').as('update')
   Route.post('setFavoris', 'UsersController.setFavoris').as('setFavoris')
   Route.post('getFavoris', 'UsersController.getFavoris').as('getFavoris')

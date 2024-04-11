@@ -64,6 +64,22 @@ export default class UsersController {
     }
   }
 
+
+  public async get({ request, response }: HttpContextContract): Promise<void> {
+    try {
+// TODO: ajouter l'authentification avec le token pour accéder à la route
+// console.log(request);
+// return request
+        // const user = request.user // Récupérez les informations de l'utilisateur depuis la requête
+        // Utilisez les informations de l'utilisateur comme nécessaire
+        // return response.send(user)
+
+    } catch (error) {
+      return response.status(400).send({ message: 'Erreur lors de la récupération des favoris' })
+    }
+  }
+
+
   /**
    * update
    * Met à jour les champs: username, phone_number & avatar
