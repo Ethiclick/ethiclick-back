@@ -65,17 +65,19 @@ export default class UsersController {
   }
 
 
-  public async get({ request, response }: HttpContextContract): Promise<void> {
+  public async get({ auth, response }: HttpContextContract): Promise<void> {
     try {
-// TODO: ajouter l'authentification avec le token pour accéder à la route
-// console.log(request);
-// return request
-        // const user = request.user // Récupérez les informations de l'utilisateur depuis la requête
-        // Utilisez les informations de l'utilisateur comme nécessaire
-        // return response.send(user)
+      // On vérifie d'abord que le token est valide
+      await auth.use('api').authenticate()
+      // On récup le user
+      const user = auth.use('api').user!;
+      // On vire le password
+      user.password = "";
+
+      return response.send(user);
 
     } catch (error) {
-      return response.status(400).send({ message: 'Erreur lors de la récupération des favoris' })
+      return response.status(400).send({ message: 'Erreur lors de la récupération de l\'utilisateur' })
     }
   }
 
@@ -150,6 +152,12 @@ export default class UsersController {
   }
   // logout function
   public async logout({ auth, response }: HttpContextContract) {
+    // TODO: ajouter la révocation du token
+    // await auth.use('api').revoke()
+    // return {
+    //   revoked: true
+    // }
+    
     await auth.logout()
     return response.status(200)
   }
