@@ -19,9 +19,16 @@ export default class UsersController {
     })
 
     const data = await request.validate({ schema: validations })
+
+    // Client par défaut
     if (!data.idrole) {
       data.idrole = 3
     }
+    // Avatar par défaut
+    if (!data.avatar) {
+      data.avatar = '../assets/avatar.png';
+    }
+
     const user = await Users.create(data)
 
     // Role 1: Admin |  2: pro |  3: Client
@@ -32,7 +39,6 @@ export default class UsersController {
       return { pro, user }
     }
     if (data.idrole === 3) {
-      // TODO: insertion d'un client
       const clientModel = new ClientsController()
       const client = await clientModel.insert(request, user.id)
       return { client, user }
