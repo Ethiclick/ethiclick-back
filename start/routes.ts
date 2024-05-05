@@ -22,6 +22,12 @@ import Redis from '@ioc:Adonis/Addons/Redis'
 import HealthCheck from '@ioc:Adonis/Core/HealthCheck'
 
 Route.group(() => {
+  // Admin view group
+  Route.get('/', 'AuthController.index')
+  Route.get('/users', 'UsersController.index').middleware('auth')
+})
+
+Route.group(() => {
   // registration logic
   Route.post('register', 'UsersController.register').as('register')
   Route.post('login', 'UsersController.login').as('login')

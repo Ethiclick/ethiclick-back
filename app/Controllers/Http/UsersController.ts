@@ -5,6 +5,9 @@ import ProfessionnelsController from './ProfessionnelsController'
 import ClientsController from './ClientsController'
 
 export default class UsersController {
+  public async index({ view }: HttpContextContract) {
+    return view.render('users')
+  }
   /**
    * Création d'un utilisateur
    */
@@ -26,7 +29,7 @@ export default class UsersController {
     }
     // Avatar par défaut
     if (!data.avatar) {
-      data.avatar = '../assets/avatar.png';
+      data.avatar = '../assets/avatar.png'
     }
 
     const user = await Users.create(data)
@@ -70,23 +73,22 @@ export default class UsersController {
     }
   }
 
-
   public async get({ auth, response }: HttpContextContract): Promise<void> {
     try {
       // On vérifie d'abord que le token est valide
       await auth.use('api').authenticate()
       // On récup le user
-      const user = auth.use('api').user!;
+      const user = auth.use('api').user!
       // On vire le password
-      user.password = "";
+      user.password = ''
 
-      return response.send(user);
-
+      return response.send(user)
     } catch (error) {
-      return response.status(400).send({ message: 'Erreur lors de la récupération de l\'utilisateur' })
+      return response
+        .status(400)
+        .send({ message: "Erreur lors de la récupération de l'utilisateur" })
     }
   }
-
 
   /**
    * update
@@ -163,7 +165,7 @@ export default class UsersController {
     // return {
     //   revoked: true
     // }
-    
+
     await auth.logout()
     return response.status(200)
   }
