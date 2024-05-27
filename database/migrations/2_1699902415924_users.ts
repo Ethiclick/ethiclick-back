@@ -9,7 +9,7 @@ export default class Users extends BaseSchema {
       /**
        * Colonne
        */
-      table.string('email')
+      table.string('email').unique()
       table.string('password')
       table.string('username')
       table.boolean('token')
