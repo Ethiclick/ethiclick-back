@@ -97,12 +97,8 @@ export default class ProfessionnelsController {
 
   /**
    * Récupère les professionnels appartenant à une catégorie
-   * @param {Object} params
-   * @param {String}   params.idcat   Identifiant de la catégorie recherché
-   * @param {String}   params.level   Niveau d'imbrication de la catégorie, par défault level 1
-   * @returns {any}
    */
-  public async getByCat({ params, response }) {
+  public async getByCat({ params, response }: HttpContextContract) {
     try {
       let field = `idcat1`
       if (!params.idcat) {
