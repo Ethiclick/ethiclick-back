@@ -26,10 +26,10 @@ Route.group(() => {
   Route.post('register', 'UsersController.register').as('register')
   Route.post('login', 'UsersController.login').as('login')
   Route.get('get', 'UsersController.get').as('get').middleware('auth')
-  Route.post('update', 'UsersController.update').as('update')
-  Route.post('setFavoris', 'UsersController.setFavoris').as('setFavoris')
-  Route.post('getFavoris', 'UsersController.getFavoris').as('getFavoris')
-  Route.post('logout', 'UsersController.logout').as('logout')
+  Route.post('update', 'UsersController.update').as('update').middleware('auth')
+  Route.post('setFavoris', 'UsersController.setFavoris').as('setFavoris').middleware('auth')
+  Route.post('getFavoris', 'UsersController.getFavoris').as('getFavoris').middleware('auth')
+  Route.post('logout', 'UsersController.logout').as('logout').middleware('auth')
 }).prefix(`/users/`)
 
 Route.group(() => {
@@ -37,7 +37,9 @@ Route.group(() => {
   Route.post('update', 'ProfessionnelsController.update')
   Route.get('', 'ProfessionnelsController.get')
   Route.get('cat/:idcat/:level?', 'ProfessionnelsController.getByCat')
-}).prefix(`/professionnel/`)
+})
+  .prefix(`/professionnel/`)
+  .middleware('auth')
 
 Route.group(() => {
   // Si pas de params => toutes les catégories
@@ -48,7 +50,9 @@ Route.group(() => {
   Route.get('libelle/:libelle', 'CategoriesController.getByLibelle')
   // Ajout/update de categorie selon les paramètres envoyé
   Route.post('addOrUpdate', 'CategoriesController.addOrUpdate')
-}).prefix('/categorie/')
+})
+  .prefix('/categorie/')
+  .middleware('auth')
 
 // *** TEST de connexion redis
 Route.get('/test-redis', async ({ response }) => {
@@ -65,4 +69,4 @@ Route.get('health', async ({ response }) => {
   const report = await HealthCheck.getReport()
 
   return report.healthy ? response.ok(report) : response.badRequest(report)
-})
+}).middleware('auth')
