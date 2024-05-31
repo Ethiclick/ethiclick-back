@@ -7,9 +7,9 @@ export default class ProfessionnelsController {
   // si id on renvoie selon l'identifiant
   // si on à le level tout les pros de ce level
   // Sinon on renvoie tout les pros
-  public async get() {
+  public async get({ response }: HttpContextContract) {
     const pro = await Professionnel.all()
-    return pro
+    return response.send(pro)
   }
 
   /**
