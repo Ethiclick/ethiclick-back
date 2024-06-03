@@ -1,5 +1,5 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import Professionnel from 'App/Models/Professionnel'
+import Professionnel from '#app/Models/Professionnel'
 import { rules, schema } from '@ioc:Adonis/Core/Validator'
 
 export default class ProfessionnelsController {

@@ -1,8 +1,8 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import { schema } from '@ioc:Adonis/Core/Validator'
-import CategorieOne from 'App/Models/CategorieOne'
-import CategorieTwo from 'App/Models/CategorieTwo'
-import CategorieThree from 'App/Models/CategorieThree'
+import CategorieOne from '#app/Models/CategorieOne'
+import CategorieTwo from '#app/Models/CategorieTwo'
+import CategorieThree from '#app/Models/CategorieThree'
 import Database from '@ioc:Adonis/Lucid/Database'
 
 export default class CategoriesController {

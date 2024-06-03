@@ -8,7 +8,7 @@ import {
   hasMany,
   HasMany,
 } from '@ioc:Adonis/Lucid/Orm'
-import Role from 'App/Models/Role'
+import Role from '#app/Models/Role'
 import Hash from '@ioc:Adonis/Core/Hash'
 import Professionnel from './Professionnel'
 import Client from './Client'

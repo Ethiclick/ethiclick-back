@@ -1,5 +1,5 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import Users from 'App/Models/User'
+import Users from '#app/Models/User'
 import { rules, schema } from '@ioc:Adonis/Core/Validator'
 import ProfessionnelsController from './ProfessionnelsController'
 import ClientsController from './ClientsController'

@@ -1,5 +1,5 @@
 import BaseSeeder from '@ioc:Adonis/Lucid/Seeder'
-import Professionnel from 'App/Models/Professionnel'
+import Professionnel from '#app/Models/Professionnel'
 
 export default class ProfessionnelSeeder extends BaseSeeder {
   public async run() {
