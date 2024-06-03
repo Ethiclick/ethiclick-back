@@ -1,5 +1,5 @@
 import BaseSeeder from '@adonisjs/lucid/seeders'
-import CategorieOne from '../../app/Models/CategorieOne'
+import CategorieOne from '../../app/Models/CategorieOne.js'
 
 export default class CategoriesOneSeeder extends BaseSeeder {
   public async run() {

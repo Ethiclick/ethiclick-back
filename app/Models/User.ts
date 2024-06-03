@@ -8,8 +8,8 @@ import {
 } from '@adonisjs/lucid/orm'
 import Role from '#app/Models/Role'
 import hash from '@adonisjs/core/services/hash'
-import Professionnel from './Professionnel'
-import Client from './Client'
+import Professionnel from './Professionnel.js'
+import Client from './Client.js'
 import { BelongsTo } from "@adonisjs/lucid/types/relations";
 import { HasMany } from "@adonisjs/lucid/types/relations";
 

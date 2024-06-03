@@ -1,5 +1,5 @@
 import BaseSeeder from '@adonisjs/lucid/seeders'
-import Jours from '../../app/Models/Jour'
+import Jours from '../../app/Models/Jour.js'
 
 export default class JourSeeder extends BaseSeeder {
   public async run() {

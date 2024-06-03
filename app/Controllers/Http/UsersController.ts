@@ -1,8 +1,8 @@
 import { HttpContext } from '@adonisjs/core/http'
 import Users from '#app/Models/User'
 import { rules, schema } from '@adonisjs/validator'
-import ProfessionnelsController from './ProfessionnelsController'
-import ClientsController from './ClientsController'
+import ProfessionnelsController from './ProfessionnelsController.js'
+import ClientsController from './ClientsController.js'
 
 export default class UsersController {
   /**

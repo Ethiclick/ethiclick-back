@@ -1,11 +1,11 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column, hasMany, hasOne } from '@adonisjs/lucid/orm'
-import User from './User'
-import CategorieOne from './CategorieOne'
-import CategorieTwo from './CategorieTwo'
-import CategorieThree from './CategorieThree'
-import PriceRange from './PriceRange'
-import Abonnement from './Abonnement'
+import User from './User.js'
+import CategorieOne from './CategorieOne.js'
+import CategorieTwo from './CategorieTwo.js'
+import CategorieThree from './CategorieThree.js'
+import PriceRange from './PriceRange.js'
+import Abonnement from './Abonnement.js'
 import { HasMany } from "@adonisjs/lucid/types/relations";
 import { HasOne } from "@adonisjs/lucid/types/relations";
 
