@@ -18,7 +18,7 @@ const bodyParserConfig = defineConfig({
   | to avoid body parsing for `GET` requests.
   |
   */
-  whitelistedMethods: ['POST', 'PUT', 'PATCH', 'DELETE'],
+  allowedMethods: ['POST', 'PUT', 'PATCH', 'DELETE'],
 
   /*
   |--------------------------------------------------------------------------
@@ -53,7 +53,7 @@ const bodyParserConfig = defineConfig({
   form: {
     encoding: 'utf-8',
     limit: '1mb',
-    queryString: {},
+    // queryString: {},
 
     /*
     |--------------------------------------------------------------------------
@@ -83,7 +83,7 @@ const bodyParserConfig = defineConfig({
   raw: {
     encoding: 'utf-8',
     limit: '1mb',
-    queryString: {},
+    // queryString: {},
     types: ['text/*'],
   },
 

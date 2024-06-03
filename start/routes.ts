@@ -17,8 +17,8 @@
 | import './routes/customer'
 |
 */
-import router from '@adonisjs/core/services/router'
-import redis from '@adonisjs/redis/services/main'
+import { router } from '@adonisjs/core/services/router'
+import { redis } from '@adonisjs/redis/services/main'
 import HealthCheck from '@ioc:Adonis/Core/HealthCheck'
 
 router.group(() => {
