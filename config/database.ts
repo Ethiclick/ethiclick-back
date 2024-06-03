@@ -7,8 +7,9 @@
 
 import env from '#start/env'
 import { DatabaseConfig } from "@adonisjs/lucid/database";
+import { defineConfig } from "@adonisjs/lucid";
 
-const databaseConfig: DatabaseConfig = {
+const databaseConfig = defineConfig({
   /*
   |--------------------------------------------------------------------------
   | Connection
@@ -49,6 +50,6 @@ const databaseConfig: DatabaseConfig = {
       debug: false,
     },
   },
-}
+})
 
 export default databaseConfig
