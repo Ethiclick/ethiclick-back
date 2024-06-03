@@ -1,9 +1,9 @@
-import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import { schema } from '@ioc:Adonis/Core/Validator'
+import type { HttpContext } from '@adonisjs/core/http'
+import { schema } from '@adonisjs/validator'
 import CategorieOne from '#app/Models/CategorieOne'
 import CategorieTwo from '#app/Models/CategorieTwo'
 import CategorieThree from '#app/Models/CategorieThree'
-import Database from '@ioc:Adonis/Lucid/Database'
+import db from '@adonisjs/lucid/services/db'
 
 export default class CategoriesController {
   /**
@@ -33,7 +33,7 @@ export default class CategoriesController {
         }
       } else {
         // On récupère toutes les catégories et leurs sous niveaux
-        const query = await Database.from('categorie_ones')
+        const query = await db.from('categorie_ones')
           .leftJoin('categorie_twos', 'categorie_ones.id', '=', 'categorie_twos.idcat1')
           .leftJoin('categorie_threes', 'categorie_twos.id', '=', 'categorie_threes.idcat2')
           .select('categorie_ones.*')
@@ -106,7 +106,7 @@ export default class CategoriesController {
 
       let Categories
       if (level == 1) {
-        Categories = await Database.from('categorie_ones').orderBy('id')
+        Categories = await db.from('categorie_ones').orderBy('id')
       }
       if (level == 2) {
         Categories = await CategorieTwo.all()
@@ -203,7 +203,7 @@ export default class CategoriesController {
    * @param {any} response
    * @returns {Object}  Message d'erreur ou de succès
    */
-  public async addOrUpdate({ request, response }: HttpContextContract): Promise<void> {
+  public async addOrUpdate({ request, response }: HttpContext): Promise<void> {
     try {
       // TODO: Amélioration : compartimenter les levels dans des fonctions - regrouper le code répété
       const validations = schema.create({

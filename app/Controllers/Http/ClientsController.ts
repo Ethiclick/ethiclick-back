@@ -1,6 +1,6 @@
 // import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 // import Users from 'App/Models/User'
-import { schema } from '@ioc:Adonis/Core/Validator'
+import { schema } from '@adonisjs/validator'
 import Client from '#app/Models/Client'
 // import ProfessionnelsController from './ProfessionnelsController'
 // import ClientsController from './ClientsController'

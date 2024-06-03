@@ -1,4 +1,4 @@
-import BaseSeeder from '@ioc:Adonis/Lucid/Seeder'
+import BaseSeeder from '@adonisjs/lucid/seeders'
 import Professionnel from '#app/Models/Professionnel'
 
 export default class ProfessionnelSeeder extends BaseSeeder {

@@ -7,8 +7,8 @@
 | boot.
 |
 */
-import Redis from '@ioc:Adonis/Addons/Redis'
+import redis from '@adonisjs/redis/services/main'
 
-Redis.subscribe('users:signup', (users: string) => {
+redis.subscribe('users:signup', (users: string) => {
   console.log(JSON.parse(users))
 })

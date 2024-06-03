@@ -1,4 +1,4 @@
-import BaseSeeder from '@ioc:Adonis/Lucid/Seeder'
+import BaseSeeder from '@adonisjs/lucid/seeders'
 import CategorieOne from '../../app/Models/CategorieOne'
 
 export default class CategoriesOneSeeder extends BaseSeeder {

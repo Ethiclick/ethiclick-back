@@ -7,7 +7,7 @@
 | boot.
 |
 */
-import { validator } from '@ioc:Adonis/Core/Validator'
+import { validator } from '@adonisjs/validator'
 
 validator.rule('json', (value) => {
   try {

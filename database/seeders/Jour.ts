@@ -1,4 +1,4 @@
-import BaseSeeder from '@ioc:Adonis/Lucid/Seeder'
+import BaseSeeder from '@adonisjs/lucid/seeders'
 import Jours from '../../app/Models/Jour'
 
 export default class JourSeeder extends BaseSeeder {

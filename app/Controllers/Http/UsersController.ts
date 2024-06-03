@@ -1,6 +1,6 @@
-import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import { HttpContext } from '@adonisjs/core/http'
 import Users from '#app/Models/User'
-import { rules, schema } from '@ioc:Adonis/Core/Validator'
+import { rules, schema } from '@adonisjs/validator'
 import ProfessionnelsController from './ProfessionnelsController'
 import ClientsController from './ClientsController'
 
@@ -8,7 +8,7 @@ export default class UsersController {
   /**
    * Création d'un utilisateur
    */
-  public async register({ request, response }: HttpContextContract) {
+  public async register({ request, response }: HttpContext) {
     const validations = schema.create({
       email: schema.string({}, [rules.email(), rules.unique({ table: 'users', column: 'email' })]),
       password: schema.string({}, [rules.confirmed()]),
@@ -50,7 +50,7 @@ export default class UsersController {
    * login
    * @returns {Object} Token d'authentification
    */
-  public async login({ auth, request, response }: HttpContextContract): Promise<{
+  public async login({ auth, request, response }: HttpContext): Promise<{
     type: 'bearer'
     token: string
     expires_at?: string | undefined
@@ -71,7 +71,7 @@ export default class UsersController {
     }
   }
 
-  public async get({ auth, response }: HttpContextContract): Promise<void> {
+  public async get({ auth, response }: HttpContext): Promise<void> {
     try {
       // On vérifie d'abord que le token est valide
       await auth.use('api').authenticate()
@@ -94,7 +94,7 @@ export default class UsersController {
    * Pour la modificaiton du mdp => autre circuit
    * Pas de modification du mail !
    */
-  public async update({ request, response }: HttpContextContract): Promise<void> {
+  public async update({ request, response }: HttpContext): Promise<void> {
     try {
       // validation des champs
       const validations = schema.create({
@@ -122,7 +122,7 @@ export default class UsersController {
     }
   }
 
-  public async setFavoris({ request, response }: HttpContextContract): Promise<void> {
+  public async setFavoris({ request, response }: HttpContext): Promise<void> {
     try {
       // validation des champs
       const validations = schema.create({
@@ -143,7 +143,7 @@ export default class UsersController {
     }
   }
 
-  public async getFavoris({ request, response }: HttpContextContract): Promise<void> {
+  public async getFavoris({ request, response }: HttpContext): Promise<void> {
     try {
       const validations = schema.create({
         id: schema.number(),
@@ -157,7 +157,7 @@ export default class UsersController {
     }
   }
   // logout function
-  public async logout({ auth, response }: HttpContextContract) {
+  public async logout({ auth, response }: HttpContext) {
     // TODO: ajouter la révocation du token
     // await auth.use('api').revoke()
     // return {

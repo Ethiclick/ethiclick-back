@@ -1,6 +1,7 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, hasMany, HasMany } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, column, hasMany } from '@adonisjs/lucid/orm'
 import CategorieTwo from './CategorieTwo'
+import { HasMany } from "@adonisjs/lucid/types/relations";
 
 export default class CategorieOne extends BaseModel {
   @column({ isPrimary: true })

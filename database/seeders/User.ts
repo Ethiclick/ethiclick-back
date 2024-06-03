@@ -1,6 +1,6 @@
-import BaseSeeder from '@ioc:Adonis/Lucid/Seeder'
+import BaseSeeder from '@adonisjs/lucid/seeders'
 import User from '#app/Models/User'
-import Hash from '@ioc:Adonis/Core/Hash'
+import hash from '@adonisjs/core/services/hash'
 
 export default class UserSeeder extends BaseSeeder {
   public async run() {
@@ -10,7 +10,7 @@ export default class UserSeeder extends BaseSeeder {
         idrole: 1,
         email: 'contact@ethiclick.fr',
         username: 'Admin',
-        password: await Hash.make('admin'),
+        password: await hash.make('admin'),
       },
     ])
   }

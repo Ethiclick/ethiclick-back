@@ -1,11 +1,13 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, hasMany, HasMany, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, column, hasMany, hasOne } from '@adonisjs/lucid/orm'
 import User from './User'
 import CategorieOne from './CategorieOne'
 import CategorieTwo from './CategorieTwo'
 import CategorieThree from './CategorieThree'
 import PriceRange from './PriceRange'
 import Abonnement from './Abonnement'
+import { HasMany } from "@adonisjs/lucid/types/relations";
+import { HasOne } from "@adonisjs/lucid/types/relations";
 
 export default class Professionnel extends BaseModel {
   @column({ isPrimary: true })

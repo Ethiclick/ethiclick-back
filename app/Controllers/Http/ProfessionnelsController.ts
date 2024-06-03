@@ -1,13 +1,13 @@
-import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import type { HttpContext } from '@adonisjs/core/http'
 import Professionnel from '#app/Models/Professionnel'
-import { rules, schema } from '@ioc:Adonis/Core/Validator'
+import { rules, schema } from '@adonisjs/validator'
 
 export default class ProfessionnelsController {
   // TODO: Regrouper les get => selon le params dispo on renvoie !=
   // si id on renvoie selon l'identifiant
   // si on à le level tout les pros de ce level
   // Sinon on renvoie tout les pros
-  public async get({ response }: HttpContextContract) {
+  public async get({ response }: HttpContext) {
     const pro = await Professionnel.all()
     return response.send(pro)
   }
@@ -51,7 +51,7 @@ export default class ProfessionnelsController {
    * except: siret, idcat, abo, price, iduser
    * @returns {String} Json contenant le message de succès ou l'erreur
    */
-  public async update({ request, response }: HttpContextContract): Promise<void> {
+  public async update({ request, response }: HttpContext): Promise<void> {
     try {
       let regexUrl =
         /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w\-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/
@@ -98,7 +98,7 @@ export default class ProfessionnelsController {
   /**
    * Récupère les professionnels appartenant à une catégorie
    */
-  public async getByCat({ params, response }: HttpContextContract) {
+  public async getByCat({ params, response }: HttpContext) {
     try {
       let field = `idcat1`
       if (!params.idcat) {

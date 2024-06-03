@@ -1,6 +1,7 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, HasMany, hasMany } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, column, hasMany } from '@adonisjs/lucid/orm'
 import Users from '#app/Models/User'
+import { HasMany } from "@adonisjs/lucid/types/relations";
 
 export default class Role extends BaseModel {
   @hasMany(() => Users)
