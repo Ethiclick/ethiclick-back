@@ -58,7 +58,7 @@ export default class UsersController {
   } | void> {
     const email = request.input('email')
     const password = request.input('password')
-    console.log(email, password)
+    // console.log(email, password)
 
     try {
       const token = await auth.use('api').attempt(email, password)
