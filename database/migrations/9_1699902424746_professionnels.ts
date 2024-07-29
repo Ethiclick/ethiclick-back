@@ -12,7 +12,7 @@ export default class Professionnels extends BaseSchema {
       table.string('nom')
       table.string('siret')
       table.string('adresse')
-      table.point('coordinates')
+      table.string('coordinates')
       table.string('city')
       table.integer('postal_code', 5)
       table.string('website')
