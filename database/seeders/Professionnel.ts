@@ -14,6 +14,7 @@ export default class ProfessionnelSeeder extends BaseSeeder {
         website: 'https://www.otsokop.org/',
         acc_card: true,
         photos: '[ {"1": "photos" } ]',
+        coordinates: [43.50210758387039,-1.468053058055211]
       },
       {
         nom: 'Grain de soleil',
@@ -24,6 +25,7 @@ export default class ProfessionnelSeeder extends BaseSeeder {
         website: 'https://magasins.lescomptoirsdelabio.fr/fr/grain-de-soleil-bayonne-105456',
         acc_card: true,
         photos: '[ {"1": "photo1.png" } ]',
+        coordinates: [43.49193265337359, -1.494442569875915],
       },
       {
         nom: 'Brasserie BASA',
@@ -34,6 +36,7 @@ export default class ProfessionnelSeeder extends BaseSeeder {
         website: 'https://www.brasserie-basa.com/',
         acc_card: true,
         photos: '[ {"1": "superPhoto.jpg" } ]',
+        coordinates: [43.49023872326412, -1.4761069870119077]
       },
     ])
   }
