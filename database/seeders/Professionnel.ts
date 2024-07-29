@@ -25,7 +25,7 @@ export default class ProfessionnelSeeder extends BaseSeeder {
         website: 'https://magasins.lescomptoirsdelabio.fr/fr/grain-de-soleil-bayonne-105456',
         acc_card: true,
         photos: '[ {"1": "photo1.png" } ]',
-        coordinates: '{ "lat" :43.49193265337359, "long" : -1.494442569875915],
+        coordinates: '{ "lat" :43.49193265337359, "long" : -1.494442569875915}',
       },
       {
         nom: 'Brasserie BASA',
