@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, hasMany, HasMany, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, BelongsTo, belongsTo, column, hasMany, HasMany, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
 import User from './User'
 import CategorieOne from './CategorieOne'
 import CategorieTwo from './CategorieTwo'
@@ -52,29 +52,46 @@ export default class Professionnel extends BaseModel {
   })
   public profile: HasOne<typeof User>
 
-  // ---------------------------------
-  @hasMany(() => CategorieOne, {
-    localKey: 'idcat1',
-  })
-  public id_cat1: HasMany<typeof CategorieOne>
 
-  @hasMany(() => CategorieTwo, {
-    localKey: 'idcat2',
-  })
-  public id_cat2: HasMany<typeof CategorieTwo>
 
-  @hasMany(() => CategorieThree, {
-    localKey: 'idcat3',
-  })
-  public id_cat3: HasMany<typeof CategorieThree>
+  @column()
+  public idcat1: number
 
-  @hasMany(() => PriceRange, {
-    localKey: 'idprice',
-  })
-  public id_priceRange: HasMany<typeof PriceRange>
+  @column()
+  public idcat2: number
 
-  @hasMany(() => Abonnement, {
-    localKey: 'idabo',
+  @column()
+  public idcat3: number
+
+  @column()
+  public idprice: number
+
+  @column()
+  public idabo: number
+
+  // Relations
+  @belongsTo(() => CategorieOne, {
+    foreignKey: 'idcat1',
   })
-  public id_abo: HasMany<typeof Abonnement>
+  public categorieOne: BelongsTo<typeof CategorieOne>
+
+  @belongsTo(() => CategorieTwo, {
+    foreignKey: 'idcat2',
+  })
+  public categorieTwo: BelongsTo<typeof CategorieTwo>
+
+  @belongsTo(() => CategorieThree, {
+    foreignKey: 'idcat3',
+  })
+  public categorieThree: BelongsTo<typeof CategorieThree>
+
+  @belongsTo(() => PriceRange, {
+    foreignKey: 'idprice',
+  })
+  public price: BelongsTo<typeof PriceRange>
+
+  @belongsTo(() => Abonnement, {
+    foreignKey: 'idabo',
+  })
+  public abo: BelongsTo<typeof Abonnement>
 }
