@@ -21,7 +21,7 @@ export default class Professionnel extends BaseModel {
   public adresse: string
 
   @column()
-  public coordinates: number[]
+  public coordinates: string
 
   @column()
   public city: string
