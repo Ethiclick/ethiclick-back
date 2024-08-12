@@ -37,6 +37,7 @@ Route.group(() => {
   Route.post('update', 'ProfessionnelsController.update')
   Route.get('', 'ProfessionnelsController.get')
   Route.get('cat/:idcat/:level?', 'ProfessionnelsController.getByCat')
+  Route.post('add', 'ProfessionnelsController.insert')
 })
   .prefix(`/professionnel/`)
   .middleware('auth')
